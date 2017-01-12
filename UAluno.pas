@@ -3,161 +3,261 @@ unit UAluno;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Menus, Data.DB,
-  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, FireDAC.Phys.OracleDef,
-  FireDAC.UI.Intf, FireDAC.VCLUI.Wait, FireDAC.Stan.Intf, FireDAC.Stan.Option,
-  FireDAC.Stan.Error, FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool,
-  FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Stan.Param, FireDAC.DatS,
-  FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.Client, FireDAC.Comp.DataSet,
-  FireDAC.Comp.UI, FireDAC.Phys.Oracle, UData;
+  System.SysUtils, Data.DB, UData, FireDAC.Phys.OracleWrapper;
 
-type
-  TFrmAluno = class(TForm)
-    menu: TMainMenu;
-    Sair1: TMenuItem;
-    Pesquisar1: TMenuItem;
-    Cadastrar1: TMenuItem;
-    DbgAluno: TDBGrid;
-    PnlCadastro: TPanel;
-    TxtNome: TEdit;
-    Label1: TLabel;
-    Label2: TLabel;
-    BtnCancelar: TButton;
-    Label3: TLabel;
-    TxtEndereco: TEdit;
-    Label4: TLabel;
-    Label5: TLabel;
-    Label6: TLabel;
-    Label7: TLabel;
-    MskCEP: TMaskEdit;
-    MskRA: TMaskEdit;
-    MskTelefone: TMaskEdit;
-    MskCelular: TMaskEdit;
-    MskNascimento: TMaskEdit;
-    BtnGravar: TButton;
-    PnlPesquisa: TPanel;
-    Label8: TLabel;
-    Label9: TLabel;
-    TxtPesquisaNome: TEdit;
-    BtnCancelarPesquisa: TButton;
-    MskPesquisaRA: TMaskEdit;
-    BtnPesquisar: TButton;
-    procedure Sair1Click(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure Cadastrar1Click(Sender: TObject);
-    procedure BtnCancelarClick(Sender: TObject);
-    procedure Pesquisar1Click(Sender: TObject);
-    procedure BtnCancelarPesquisaClick(Sender: TObject);
-    procedure ExibePnlCadastro(Exibir: boolean);
-    procedure ExibePnlPesquisa(Exibir: boolean);
-    procedure ExibeMenu(Exibir: boolean);
-    procedure BtnGravarClick(Sender: TObject);
-  private
-    { Private declarations }
-  public
-    { Public declarations }
-  end;
+type TAluno = class
 
-var
-  FrmAluno: TFrmAluno;
+private
+
+// atributos e metodos privados
+// atributos privados
+
+Fid: Integer;
+Fnome: String;
+Fra: String;
+Fendereco: String;
+Fcep: String;
+Ftelefone: String;
+Fcelular: String;
+Fnascimento: String;
+//Fmatricula: TDateTime;
+
+protected
+
+// atributos e metodos protegidos
+
+public
+
+// atibutos e metodos publicos
+// propiedade publicas
+
+property ID: Integer read Fid;
+property Nome: String read Fnome write Fnome;
+property RA: String read Fra write Fra;
+property Endereco: String read Fendereco write Fendereco;
+property CEP: String read Fcep write Fcep;
+property Telefone: String read Ftelefone write Ftelefone;
+property Celular: String read Fcelular write Fcelular;
+property Nascimento: String read Fnascimento write Fnascimento;
+//property Matricula: TDateTime read Fmatricula write Fmatricula;
+
+
+// declaração do metodo construtor
+Constructor Create; overload;
+Constructor Create(ID: Integer); overload;
+
+// declaração do metodo destrutor
+Destructor Destroy; Override;
+
+// metodos da classe
+function CadastrarAluno(): String;
+function AtualizarAluno(ID: Integer): String;
+function ExcluirAluno(): String;
+function BuscarAlunos(): TDataSource;
+
+end;
 
 implementation
 
-{$R *.dfm}
+{ Tpessoa }
 
-procedure TFrmAluno.BtnCancelarClick(Sender: TObject);
+constructor TAluno.Create;
 begin
 
-  ExibePnlCadastro(False);
-
-  ExibeMenu(True);
+// metodo contrutor
 
 end;
 
-procedure TFrmAluno.BtnCancelarPesquisaClick(Sender: TObject);
+constructor TAluno.Create(ID: Integer);
 begin
 
-  ExibePnlPesquisa(False);
+// metodo contrutor
 
-  ExibeMenu(True);
+  self.Fid := ID;
 
 end;
 
-procedure TFrmAluno.BtnGravarClick(Sender: TObject);
+destructor TAluno.Destroy;
 begin
 
-//  UData.DataModule1.FDConnection1
+// metodo destrutor
+
+inherited;
 
 end;
 
-procedure TFrmAluno.Cadastrar1Click(Sender: TObject);
+function TAluno.CadastrarAluno(): String;
+var
+  retorno: String;
 begin
 
-  ExibePnlCadastro(True);
+  try
 
-  ExibeMenu(False);
+    with UData.DataModuleSecretaria do
+    begin
+      FDConn.Connected := True;
 
-end;
+      with FDStoredProcInsereAluno do
+      begin
+        ParamByName('P_NOME').AsString := Fnome;
+        ParamByName('P_RA').AsString := Fra;
+        ParamByName('P_ENDERECO').AsString := Fendereco;
+        ParamByName('P_CEP').AsString := Fcep;
+        ParamByName('P_TELEFONE').AsString := Ftelefone;
+        ParamByName('P_CELULAR').AsString := Fcelular;
+        ParamByName('P_NASCIMENTO').AsString := Fnascimento;
+        ExecProc;
+      end;
 
-procedure TFrmAluno.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
+    end;
 
-  Action := caFree;
-  FrmAluno := Nil;
+  except
 
-end;
+    On Ex : EOCINativeException do
 
-procedure TFrmAluno.Pesquisar1Click(Sender: TObject);
-begin
+      //retorno := IntToStr(Ex.Errors[0].ErrorCode);
 
-  ExibePnlPesquisa(True);
+      Case Ex.Errors[0].ErrorCode of
+        20001 : retorno := '20001 - NOME INVÁLIDO!';
+        20002 : retorno := '20002 - CODIGO DO RA INVÁLIDO!';
+        20003 : retorno := '20003 - CODIGO DO RA INVÁLIDO!';
+        20004 : retorno := '20004 - ENDERECO INVÁLIDO!';
+        20005 : retorno := '20005 - CODIGO DO CEP INVÁLIDO!';
+        20006 : retorno := '20006 - CODIGO DO CEP INVÁLIDO!';
+        20007 : retorno := '20007 - TELEFONE INVÁLIDO!';
+        20008 : retorno := '20008 - TELEFONE INVÁLIDO!';
+        20009 : retorno := '20009 - CELULAR INVÁLIDO!';
+        20010 : retorno := '20010 - CELULAR INVÁLIDO!';
+        20011 : retorno := '20011 - DATA DE NASCIMENTO INVÁLIDA!';
+        20012 : retorno := '20012 - DATA DE NASCIMENTO INVÁLIDA!';
+        20013 : retorno := '20013 - ERRO INESPERADO!';
+      End;
 
-  ExibeMenu(False);
-
-end;
-
-procedure TFrmAluno.Sair1Click(Sender: TObject);
-begin
-
-  Close;
-  FrmAluno := Nil;
-
-end;
-
-procedure TFrmAluno.ExibePnlPesquisa(Exibir: boolean);
-begin
-
-  with PnlPesquisa do
-  begin
-    Enabled := Exibir;
-    Visible := Exibir;
-    Align := alClient;
   end;
 
-end;
-
-procedure TFrmAluno.ExibePnlCadastro(Exibir: boolean);
-begin
-
-  with PnlCadastro do
-  begin
-    Enabled := Exibir;
-    Visible := Exibir;
-    Align := alClient;
-  end;
+  Result := retorno;
 
 end;
 
-procedure TFrmAluno.ExibeMenu(Exibir: boolean);
+function TAluno.AtualizarAluno(ID: Integer): String;
+var
+  retorno: String;
 begin
 
-  with menu do
-  begin
-    Items[0].Enabled := Exibir;
-    Items[1].Enabled := Exibir;
+  try
+
+    with UData.DataModuleSecretaria do
+    begin
+      FDConn.Connected := True;
+
+      with FDStoredProcAtualizaAluno do
+      begin
+        ParamByName('P_ID').AsBCD := Fid;
+        ParamByName('P_NOME').AsString := Fnome;
+        ParamByName('P_RA').AsString := Fra;
+        ParamByName('P_ENDERECO').AsString := Fendereco;
+        ParamByName('P_CEP').AsString := Fcep;
+        ParamByName('P_TELEFONE').AsString := Ftelefone;
+        ParamByName('P_CELULAR').AsString := Fcelular;
+        ParamByName('P_NASCIMENTO').AsString := Fnascimento;
+        ExecProc;
+      end;
+
+    end;
+
+  except
+
+    On Ex : EOCINativeException do
+
+      //retorno := IntToStr(Ex.Errors[0].ErrorCode);
+
+      Case Ex.Errors[0].ErrorCode of
+        20001 : retorno := '20001 - CODIGO ID INVÁLIDO!';
+        20002 : retorno := '20002 - NOME INVÁLIDO!';
+        20003 : retorno := '20003 - CODIGO DO RA INVÁLIDO!';
+        20004 : retorno := '20004 - CODIGO DO RA INVÁLIDO!';
+        20005 : retorno := '20005 - ENDERECO INVÁLIDO!';
+        20006 : retorno := '20006 - CODIGO DO CEP INVÁLIDO!';
+        20007 : retorno := '20007 - CODIGO DO CEP INVÁLIDO!';
+        20008 : retorno := '20008 - TELEFONE INVÁLIDO!';
+        20009 : retorno := '20009 - TELEFONE INVÁLIDO!';
+        20010 : retorno := '20010 - CELULAR INVÁLIDO!';
+        20011 : retorno := '20011 - CELULAR INVÁLIDO!';
+        20012 : retorno := '20012 - DATA DE NASCIMENTO INVÁLIDA!';
+        20013 : retorno := '20013 - DATA DE NASCIMENTO INVÁLIDA!';
+        20014 : retorno := '20014 - ERRO INESPERADO!';
+      End;
+
   end;
+
+  Result := retorno;
+
+end;
+
+function TAluno.ExcluirAluno(): String;
+var
+  retorno: String;
+begin
+
+  if Self.Fid > 0 then
+  begin
+
+    try
+
+      with UData.DataModuleSecretaria do
+      begin
+        FDConn.Connected := True;
+
+        with FDStoredProcExcluiAluno do
+        begin
+          ParamByName('P_ID').AsBCD := Self.Fid;
+          ExecProc;
+        end;
+
+      end;
+
+    except
+
+      On Ex : EOCINativeException do
+
+        //retorno := IntToStr(Ex.Errors[0].ErrorCode);
+
+        Case Ex.Errors[0].ErrorCode of
+          20001 : retorno := '20001 - CODIGO ID INVÁLIDO!';
+          20002 : retorno := '20002 - ERRO INESPERADO!';
+        End;
+
+    end;
+
+  end;
+
+  Result := retorno;
+
+end;
+
+function TAluno.BuscarAlunos(): TDataSource;
+begin
+
+    with UData.DataModuleSecretaria do
+    begin
+      FDConn.Connected := True;
+
+      with FDQueryAluno do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Add('SELECT ID, NOME, RA, ENDERECO, CEP, ' +
+                'TELEFONE, CELULAR, NASCIMENTO, MATRICULA ' +
+                'FROM VW_ALUNO');
+
+        Open();
+      end;
+
+      DtsAluno.DataSet := FDQueryAluno;
+      Result := DtsAluno;
+    end;
 
 end;
 
 end.
+

@@ -19,7 +19,7 @@ BEGIN
     EXCEPTION
     
         WHEN NOME_INVALIDO THEN
-            RAISE_APPLICATION_ERROR(-20001, 'NOME INVÁLIDO! - ' || SQLERRM);
+            RAISE_APPLICATION_ERROR(-20001, 'NOME INVÁLIDO! - ');
 
     END;
 
@@ -32,23 +32,24 @@ BEGIN
     EXCEPTION
     
         WHEN DESCRICAO_INVALIDA THEN
-            RAISE_APPLICATION_ERROR(-20002, 'DESCRIÇÃO INVÁLIDA! - ' || SQLERRM);
+            RAISE_APPLICATION_ERROR(-20002, 'DESCRIÇÃO INVÁLIDA! - ');
 
     END;
-   
-
-    INSERT INTO CURSO(ID,
-                      NOME, DESCRICAO)
-    VALUES(SQ_CURSO.NEXTVAL, 
-           P_NOME, P_DESCRICAO);
-           
+        
+    BEGIN
     
-    COMMIT;
+        INSERT INTO CURSO(ID,
+                          NOME, DESCRICAO)
+        VALUES(SQ_CURSO.NEXTVAL, 
+               P_NOME, P_DESCRICAO);
+         
+        COMMIT;
+        
+    EXCEPTION
     
-
-EXCEPTION
-
-    WHEN OTHERS THEN
-        RAISE_APPLICATION_ERROR(-20003, 'ERRO INESPERADO - ' || SQLERRM);
+        WHEN OTHERS THEN
+            RAISE_APPLICATION_ERROR(-20003, 'ERRO INESPERADO - ' || SQLERRM);
+    
+    END;
 
 END;

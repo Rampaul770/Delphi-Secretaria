@@ -17,18 +17,24 @@ BEGIN
     EXCEPTION    
     
         WHEN ID_INVALIDO THEN
-            RAISE_APPLICATION_ERROR(-20001, 'CODIGO ID INVÁLIDO! - ' || SQLERRM);
+            RAISE_APPLICATION_ERROR(-20001, 'CODIGO ID INVÁLIDO! - ');
     END;
-
-    DELETE FROM ALUNO
-    WHERE ID = P_ID;
     
-    COMMIT;
+    BEGIN    
     
-
-EXCEPTION
-
-    WHEN OTHERS THEN
-        RAISE_APPLICATION_ERROR(-20002, 'ERRO INESPERADO - ' || SQLERRM);
+        DELETE FROM ALUNO
+        WHERE ID = P_ID;
+        
+        COMMIT;
+        
+    EXCEPTION
+    
+        WHEN OTHERS THEN
+            BEGIN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20002, 'ERRO INESPERADO - ' || SQLERRM);
+            END;    
+            
+    END;
 
 END;

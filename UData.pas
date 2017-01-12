@@ -11,13 +11,24 @@ uses
   FireDAC.Comp.Client, FireDAC.Comp.DataSet;
 
 type
-  TDataModule1 = class(TDataModule)
-    FDConnection1: TFDConnection;
-    FDQuery1: TFDQuery;
-    FDStoredProc1: TFDStoredProc;
-    DataSource1: TDataSource;
+  TDataModuleSecretaria = class(TDataModule)
+    FDConn: TFDConnection;
+    FDQueryAluno: TFDQuery;
+    FDStoredProcInsereAluno: TFDStoredProc;
+    DtsAluno: TDataSource;
     FDPhysOracleDriverLink1: TFDPhysOracleDriverLink;
     FDGUIxWaitCursor1: TFDGUIxWaitCursor;
+    FDStoredProcAtualizaAluno: TFDStoredProc;
+    FDQueryAlunoNOME: TStringField;
+    FDQueryAlunoRA: TStringField;
+    FDQueryAlunoENDERECO: TStringField;
+    FDQueryAlunoCEP: TStringField;
+    FDQueryAlunoTELEFONE: TStringField;
+    FDQueryAlunoCELULAR: TStringField;
+    FDQueryAlunoNASCIMENTO: TStringField;
+    FDQueryAlunoMATRICULA: TStringField;
+    FDQueryAlunoID: TBCDField;
+    FDStoredProcExcluiAluno: TFDStoredProc;
   private
     { Private declarations }
   public
@@ -25,7 +36,7 @@ type
   end;
 
 var
-  DataModule1: TDataModule1;
+  DataModuleSecretaria: TDataModuleSecretaria;
 
 implementation
 

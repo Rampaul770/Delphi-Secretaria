@@ -1,0 +1,178 @@
+unit UAlunoArea;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Menus, Data.DB,
+  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, FireDAC.Phys.OracleDef,
+  FireDAC.UI.Intf, FireDAC.VCLUI.Wait, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool,
+  FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.Client, FireDAC.Comp.DataSet,
+  FireDAC.Comp.UI, FireDAC.Phys.Oracle,
+  UData, UAluno, UAlunoCadastro, UAlunoPesquisa, UFuncUtils,
+  Vcl.ComCtrls;
+
+type
+  TFrmAlunoArea = class(TForm)
+    menu: TMainMenu;
+    Arquivo1: TMenuItem;
+    DbgAluno: TDBGrid;
+    Cadastrar1: TMenuItem;
+    Pesquisar1: TMenuItem;
+    N1: TMenuItem;
+    Sair1: TMenuItem;
+    StatusBar1: TStatusBar;
+    Atualizar1: TMenuItem;
+    Recarregar1: TMenuItem;
+    Excluir1: TMenuItem;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure Pesquisar1Click(Sender: TObject);
+    procedure Sair1Click(Sender: TObject);
+    procedure Cadastrar1Click(Sender: TObject);
+    procedure DbgAlunoCellClick(Column: TColumn);
+    procedure DbgAlunoDblClick(Sender: TObject);
+    procedure Atualizar1Click(Sender: TObject);
+    procedure Recarregar1Click(Sender: TObject);
+    procedure Excluir1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure AtualizarGrid();
+  end;
+
+var
+  FrmAlunoArea: TFrmAlunoArea;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFrmAlunoArea.Atualizar1Click(Sender: TObject);
+begin
+
+  If not Assigned(FrmAlunoCadastro) Then
+    FrmAlunoCadastro := TFrmAlunoCadastro.Create(Application);
+
+  with FrmAlunoCadastro do
+  begin
+    Acao := 'UPDATE';
+    ID := StrToInt(DbgAluno.Fields[0].Text);
+    TxtNome.Text := DbgAluno.Fields[1].Text;
+    MskRA.Text := DbgAluno.Fields[2].Text;
+    TxtEndereco.Text := DbgAluno.Fields[3].Text;
+    MskCEP.Text := TiraMascara(DbgAluno.Fields[4].Text);
+    MskTelefone.Text := TiraMascara(DbgAluno.Fields[5].Text);
+    MskCelular.Text := TiraMascara(DbgAluno.Fields[6].Text);
+    MskNascimento.Text := TiraMascara(DbgAluno.Fields[7].Text);
+    ShowModal;
+  end;
+
+end;
+
+procedure TFrmAlunoArea.Cadastrar1Click(Sender: TObject);
+begin
+
+  If not Assigned(FrmAlunoCadastro) Then
+    FrmAlunoCadastro := TFrmAlunoCadastro.Create(Application);
+
+  FrmAlunoCadastro.Acao := 'INSERT';
+  FrmAlunoCadastro.ShowModal;
+
+end;
+
+procedure TFrmAlunoArea.DbgAlunoCellClick(Column: TColumn);
+begin
+
+  StatusBar1.Panels[0].Text := '-> CLIQUE DUAS VEZES PARA EDITAR O REGISTRO!'
+
+end;
+
+procedure TFrmAlunoArea.DbgAlunoDblClick(Sender: TObject);
+begin
+
+  Atualizar1Click(Sender);
+
+end;
+
+procedure TFrmAlunoArea.Excluir1Click(Sender: TObject);
+var
+  Aluno: TAluno;
+  ID: Integer;
+begin
+
+  ID := StrToInt(DbgAluno.Fields[0].Text)
+
+  if MessageBox(Handle, 'Deseja realmente excluir esse aluno?', 'Aviso',
+                MB_YESNO or MB_ICONQUESTION) = ID_YES then
+    Aluno := Aluno.Create(ID);
+
+
+end;
+
+procedure TFrmAlunoArea.FormActivate(Sender: TObject);
+begin
+
+  AtualizarGrid();
+
+end;
+
+procedure TFrmAlunoArea.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+
+  Action := caFree;
+  FrmAlunoArea := Nil;
+
+end;
+
+procedure TFrmAlunoArea.Pesquisar1Click(Sender: TObject);
+begin
+
+ If not Assigned(FrmAlunoPesquisa) Then
+    FrmAlunoPesquisa := TFrmAlunoPesquisa.Create(Application);
+
+  FrmAlunoPesquisa.ShowModal;
+
+end;
+
+procedure TFrmAlunoArea.Sair1Click(Sender: TObject);
+begin
+
+  Close;
+  FrmAlunoArea := Nil;
+
+end;
+
+procedure TFrmAlunoArea.Recarregar1Click(Sender: TObject);
+begin
+
+  AtualizarGrid;
+
+end;
+
+procedure TFrmAlunoArea.AtualizarGrid();
+var
+  Aluno: TAluno;
+begin
+
+  try
+
+    UData.DataModuleSecretaria.FDConn.Connected := True;
+
+    Aluno := TAluno.Create;
+
+    DbgAluno.DataSource := Aluno.BuscarAlunos;
+
+  finally
+
+    FreeAndNil(Aluno);
+
+  end;
+
+end;
+
+
+end.

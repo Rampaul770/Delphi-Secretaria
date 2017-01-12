@@ -1,0 +1,279 @@
+object FrmAlunoCadastro: TFrmAlunoCadastro
+  Left = 0
+  Top = 0
+  Caption = 'Cadastro de Alunos'
+  ClientHeight = 258
+  ClientWidth = 456
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnClose = FormClose
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object PnlCadastro: TPanel
+    Left = 8
+    Top = 8
+    Width = 440
+    Height = 243
+    BevelInner = bvRaised
+    BevelOuter = bvLowered
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 11
+      Top = 14
+      Width = 31
+      Height = 13
+      Caption = 'Nome:'
+    end
+    object Label2: TLabel
+      Left = 11
+      Top = 41
+      Width = 18
+      Height = 13
+      Caption = 'RA:'
+    end
+    object Label3: TLabel
+      Left = 11
+      Top = 68
+      Width = 49
+      Height = 13
+      Caption = 'Endere'#231'o:'
+    end
+    object Label4: TLabel
+      Left = 11
+      Top = 95
+      Width = 23
+      Height = 13
+      Caption = 'CEP:'
+    end
+    object Label5: TLabel
+      Left = 11
+      Top = 122
+      Width = 46
+      Height = 13
+      Caption = 'Telefone:'
+    end
+    object Label6: TLabel
+      Left = 11
+      Top = 149
+      Width = 37
+      Height = 13
+      Caption = 'Celular:'
+    end
+    object Label7: TLabel
+      Left = 11
+      Top = 176
+      Width = 59
+      Height = 13
+      Caption = 'Nascimento:'
+    end
+    object LblNomeRequerido: TLabel
+      Left = 426
+      Top = 14
+      Width = 7
+      Height = 13
+      Caption = '*'
+      Color = clWindow
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Visible = False
+    end
+    object LblRARequerido: TLabel
+      Left = 426
+      Top = 41
+      Width = 7
+      Height = 13
+      Caption = '*'
+      Color = clWindow
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Visible = False
+    end
+    object LblEnderecoRequerido: TLabel
+      Left = 426
+      Top = 68
+      Width = 7
+      Height = 13
+      Caption = '*'
+      Color = clWindow
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Visible = False
+    end
+    object LblCEPRequerido: TLabel
+      Left = 426
+      Top = 95
+      Width = 7
+      Height = 13
+      Caption = '*'
+      Color = clWindow
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Visible = False
+    end
+    object LblCelularRequerido: TLabel
+      Left = 426
+      Top = 149
+      Width = 7
+      Height = 13
+      Caption = '*'
+      Color = clWindow
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Visible = False
+    end
+    object LblNascimentoRequerido: TLabel
+      Left = 426
+      Top = 176
+      Width = 7
+      Height = 13
+      Caption = '*'
+      Color = clWindow
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Visible = False
+    end
+    object LblMensagemRequerido: TLabel
+      Left = 11
+      Top = 210
+      Width = 130
+      Height = 13
+      Caption = '* Campos obrigat'#243'rios!'
+      Color = clWindow
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Visible = False
+    end
+    object TxtNome: TEdit
+      Left = 76
+      Top = 11
+      Width = 345
+      Height = 21
+      CharCase = ecUpperCase
+      MaxLength = 100
+      TabOrder = 0
+    end
+    object BtnCancelar: TButton
+      Left = 346
+      Top = 205
+      Width = 75
+      Height = 25
+      Caption = '&Cancelar'
+      TabOrder = 8
+      OnClick = BtnCancelarClick
+    end
+    object TxtEndereco: TEdit
+      Left = 76
+      Top = 65
+      Width = 345
+      Height = 21
+      CharCase = ecUpperCase
+      MaxLength = 200
+      TabOrder = 2
+    end
+    object MskCEP: TMaskEdit
+      Left = 76
+      Top = 92
+      Width = 345
+      Height = 21
+      CharCase = ecUpperCase
+      EditMask = '00000-000;0;_'
+      MaxLength = 9
+      TabOrder = 3
+      Text = ''
+    end
+    object MskTelefone: TMaskEdit
+      Left = 76
+      Top = 119
+      Width = 345
+      Height = 21
+      CharCase = ecUpperCase
+      EditMask = '!\(99\)0000-0000;0;_'
+      MaxLength = 13
+      TabOrder = 4
+      Text = ''
+    end
+    object MskCelular: TMaskEdit
+      Left = 76
+      Top = 146
+      Width = 345
+      Height = 21
+      CharCase = ecUpperCase
+      EditMask = '!\(99\)00000-0000;0;_'
+      MaxLength = 14
+      TabOrder = 5
+      Text = ''
+    end
+    object MskNascimento: TMaskEdit
+      Left = 76
+      Top = 173
+      Width = 345
+      Height = 21
+      CharCase = ecUpperCase
+      EditMask = '!99/99/0000;0;_'
+      MaxLength = 10
+      TabOrder = 6
+      Text = ''
+    end
+    object BtnGravar: TButton
+      Left = 265
+      Top = 205
+      Width = 75
+      Height = 25
+      Caption = '&Gravar'
+      TabOrder = 7
+      OnClick = BtnGravarClick
+    end
+    object MskRA: TMaskEdit
+      Left = 76
+      Top = 38
+      Width = 345
+      Height = 21
+      CharCase = ecUpperCase
+      EditMask = '00000;0;_'
+      MaxLength = 5
+      TabOrder = 1
+      Text = ''
+    end
+  end
+end

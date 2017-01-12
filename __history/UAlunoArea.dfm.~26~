@@ -1,0 +1,163 @@
+object FrmAlunoArea: TFrmAlunoArea
+  Left = 0
+  Top = 0
+  Caption = 'Cadastro de Alunos'
+  ClientHeight = 442
+  ClientWidth = 716
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  Menu = menu
+  OldCreateOrder = False
+  Position = poDesigned
+  WindowState = wsMaximized
+  OnActivate = FormActivate
+  OnClose = FormClose
+  PixelsPerInch = 96
+  TextHeight = 13
+  object DbgAluno: TDBGrid
+    Left = 0
+    Top = 0
+    Width = 716
+    Height = 423
+    Align = alClient
+    DataSource = DataModuleSecretaria.DtsAluno
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+    ReadOnly = True
+    TabOrder = 0
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    OnCellClick = DbgAlunoCellClick
+    OnDblClick = DbgAlunoDblClick
+    Columns = <
+      item
+        Alignment = taCenter
+        Expanded = False
+        FieldName = 'ID'
+        Title.Alignment = taCenter
+        Title.Caption = 'Registro'
+        Width = 47
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NOME'
+        Title.Alignment = taCenter
+        Title.Caption = 'Nome'
+        Width = 293
+        Visible = True
+      end
+      item
+        Alignment = taCenter
+        Expanded = False
+        FieldName = 'RA'
+        Title.Alignment = taCenter
+        Title.Caption = 'R.A.'
+        Width = 89
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'ENDERECO'
+        Title.Alignment = taCenter
+        Title.Caption = 'Endere'#231'o'
+        Width = 244
+        Visible = True
+      end
+      item
+        Alignment = taCenter
+        Expanded = False
+        FieldName = 'CEP'
+        Title.Alignment = taCenter
+        Title.Caption = 'C.E.P.'
+        Width = 104
+        Visible = True
+      end
+      item
+        Alignment = taCenter
+        Expanded = False
+        FieldName = 'TELEFONE'
+        Title.Alignment = taCenter
+        Title.Caption = 'Telefone'
+        Width = 104
+        Visible = True
+      end
+      item
+        Alignment = taCenter
+        Expanded = False
+        FieldName = 'CELULAR'
+        Title.Alignment = taCenter
+        Title.Caption = 'Celular'
+        Width = 104
+        Visible = True
+      end
+      item
+        Alignment = taCenter
+        Expanded = False
+        FieldName = 'NASCIMENTO'
+        Title.Alignment = taCenter
+        Title.Caption = 'Nascimento'
+        Width = 104
+        Visible = True
+      end
+      item
+        Alignment = taCenter
+        Expanded = False
+        FieldName = 'MATRICULA'
+        Title.Alignment = taCenter
+        Title.Caption = 'Matr'#237'cula'
+        Width = 140
+        Visible = True
+      end>
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 423
+    Width = 716
+    Height = 19
+    Panels = <
+      item
+        Width = 50
+      end>
+    ExplicitLeft = 592
+    ExplicitTop = 432
+    ExplicitWidth = 0
+  end
+  object menu: TMainMenu
+    Left = 672
+    Top = 392
+    object Arquivo1: TMenuItem
+      Caption = '&Arquivo'
+      object Cadastrar1: TMenuItem
+        Caption = '&Cadastrar'
+        OnClick = Cadastrar1Click
+      end
+      object Atualizar1: TMenuItem
+        Caption = 'A&tualizar'
+        OnClick = Atualizar1Click
+      end
+      object Pesquisar1: TMenuItem
+        Caption = '&Pesquisar'
+        OnClick = Pesquisar1Click
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object Sair1: TMenuItem
+        Caption = 'Sai&r'
+        OnClick = Sair1Click
+      end
+    end
+    object Atualizar2: TMenuItem
+      Caption = 'Atualizar'
+      ShortCut = 116
+      OnClick = Atualizar2Click
+    end
+  end
+end

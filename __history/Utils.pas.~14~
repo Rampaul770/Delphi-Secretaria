@@ -1,0 +1,21 @@
+unit Utils;
+
+interface
+
+uses
+  System.SysUtils;
+
+implementation
+
+function TiraMascara(Text: String): String;
+var
+  Caracteres: array[1..4] of char = ('-', '(', ')', '/');
+begin
+
+  StringReplace(Text, '-', '', [rfReplaceAll, rfIgnoreCase]);
+
+  Result := '';
+
+end;
+
+end.

@@ -1,0 +1,47 @@
+object FrmAluno: TFrmAluno
+  Left = 0
+  Top = 0
+  Caption = 'Cadastro de Alunos'
+  ClientHeight = 442
+  ClientWidth = 716
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  Menu = menu
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  WindowState = wsMaximized
+  OnClose = FormClose
+  PixelsPerInch = 96
+  TextHeight = 13
+  object DbgAluno: TDBGrid
+    Left = 0
+    Top = 0
+    Width = 716
+    Height = 442
+    Align = alClient
+    TabOrder = 0
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+  end
+  object menu: TMainMenu
+    Left = 672
+    Top = 392
+    object Cadastrar1: TMenuItem
+      Caption = '&Cadastrar'
+    end
+    object Pesquisar1: TMenuItem
+      Caption = '&Pesquisar'
+    end
+    object Sair1: TMenuItem
+      Caption = 'Sai&r'
+      OnClick = Sair1Click
+    end
+  end
+end

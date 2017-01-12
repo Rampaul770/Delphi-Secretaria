@@ -1,0 +1,46 @@
+unit UData;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.Oracle,
+  FireDAC.Phys.OracleDef, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
+  FireDAC.DApt, FireDAC.VCLUI.Wait, FireDAC.Comp.UI, Data.DB,
+  FireDAC.Comp.Client, FireDAC.Comp.DataSet;
+
+type
+  TDataModuleSecretaria = class(TDataModule)
+    FDConn: TFDConnection;
+    FDQueryAluno: TFDQuery;
+    FDStoredProcInsereAluno: TFDStoredProc;
+    DtsAluno: TDataSource;
+    FDPhysOracleDriverLink1: TFDPhysOracleDriverLink;
+    FDGUIxWaitCursor1: TFDGUIxWaitCursor;
+    FDQueryAlunoNOME: TStringField;
+    FDQueryAlunoRA: TStringField;
+    FDQueryAlunoENDERECO: TStringField;
+    FDQueryAlunoCEP: TStringField;
+    FDQueryAlunoTELEFONE: TStringField;
+    FDQueryAlunoCELULAR: TStringField;
+    FDQueryAlunoNASCIMENTO: TStringField;
+    FDQueryAlunoMATRICULA: TStringField;
+    FDStoredProcAtualizaAluno: TFDStoredProc;
+    FDQueryAlunoID: TFMTBCDField;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DataModuleSecretaria: TDataModuleSecretaria;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+end.

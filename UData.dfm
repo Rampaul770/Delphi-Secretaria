@@ -1,27 +1,84 @@
-object DataModule1: TDataModule1
+object DataModuleSecretaria: TDataModuleSecretaria
   OldCreateOrder = False
   Height = 429
   Width = 737
-  object FDConnection1: TFDConnection
+  object FDConn: TFDConnection
     Params.Strings = (
       'Database=localhost:1521/xe'
       'User_Name=localdb'
       'Password=userapp'
       'DriverID=Ora')
-    Left = 16
+    Connected = True
+    Left = 64
     Top = 24
   end
-  object FDQuery1: TFDQuery
-    Connection = FDConnection1
-    Left = 96
-    Top = 24
+  object FDQueryAluno: TFDQuery
+    Connection = FDConn
+    SQL.Strings = (
+      
+        'SELECT ID, NOME, RA, ENDERECO, CEP, TELEFONE, CELULAR, NASCIMENT' +
+        'O, MATRICULA'
+      'FROM VW_ALUNO')
+    Left = 64
+    Top = 80
+    object FDQueryAlunoID: TBCDField
+      FieldName = 'ID'
+      Origin = 'ID'
+      Required = True
+      Precision = 5
+      Size = 0
+    end
+    object FDQueryAlunoNOME: TStringField
+      FieldName = 'NOME'
+      Origin = 'NOME'
+      Required = True
+      Size = 100
+    end
+    object FDQueryAlunoRA: TStringField
+      FieldName = 'RA'
+      Origin = 'RA'
+      Required = True
+      FixedChar = True
+      Size = 5
+    end
+    object FDQueryAlunoENDERECO: TStringField
+      FieldName = 'ENDERECO'
+      Origin = 'ENDERECO'
+      Required = True
+      Size = 200
+    end
+    object FDQueryAlunoCEP: TStringField
+      FieldName = 'CEP'
+      Origin = 'CEP'
+      Size = 9
+    end
+    object FDQueryAlunoTELEFONE: TStringField
+      FieldName = 'TELEFONE'
+      Origin = 'TELEFONE'
+      Size = 13
+    end
+    object FDQueryAlunoCELULAR: TStringField
+      FieldName = 'CELULAR'
+      Origin = 'CELULAR'
+      Size = 14
+    end
+    object FDQueryAlunoNASCIMENTO: TStringField
+      FieldName = 'NASCIMENTO'
+      Origin = 'NASCIMENTO'
+      Size = 10
+    end
+    object FDQueryAlunoMATRICULA: TStringField
+      FieldName = 'MATRICULA'
+      Origin = 'MATRICULA'
+      Size = 19
+    end
   end
-  object FDStoredProc1: TFDStoredProc
-    Connection = FDConnection1
+  object FDStoredProcInsereAluno: TFDStoredProc
+    Connection = FDConn
     SchemaName = 'LOCALDB'
     StoredProcName = 'SP_INSERE_ALUNO'
-    Left = 160
-    Top = 24
+    Left = 64
+    Top = 136
     ParamData = <
       item
         Position = 1
@@ -58,31 +115,29 @@ object DataModule1: TDataModule1
       item
         Position = 5
         Name = 'P_TELEFONE'
-        DataType = ftBCD
-        FDDataType = dtBCD
-        Precision = 11
+        DataType = ftString
+        FDDataType = dtAnsiString
         ParamType = ptInput
       end
       item
         Position = 6
         Name = 'P_CELULAR'
-        DataType = ftBCD
-        FDDataType = dtBCD
-        Precision = 11
+        DataType = ftString
+        FDDataType = dtAnsiString
         ParamType = ptInput
       end
       item
         Position = 7
         Name = 'P_NASCIMENTO'
-        DataType = ftDateTime
-        FDDataType = dtDateTime
-        NumericScale = 1000
+        DataType = ftString
+        FDDataType = dtAnsiString
         ParamType = ptInput
       end>
   end
-  object DataSource1: TDataSource
-    Left = 240
-    Top = 24
+  object DtsAluno: TDataSource
+    DataSet = FDQueryAluno
+    Left = 64
+    Top = 304
   end
   object FDPhysOracleDriverLink1: TFDPhysOracleDriverLink
     VendorHome = 'XE'
@@ -94,5 +149,90 @@ object DataModule1: TDataModule1
     Provider = 'Forms'
     Left = 496
     Top = 24
+  end
+  object FDStoredProcAtualizaAluno: TFDStoredProc
+    Connection = FDConn
+    SchemaName = 'LOCALDB'
+    StoredProcName = 'SP_ATUALIZA_ALUNO'
+    Left = 64
+    Top = 192
+    ParamData = <
+      item
+        Position = 1
+        Name = 'P_ID'
+        DataType = ftBCD
+        FDDataType = dtBCD
+        Precision = 5
+        ParamType = ptInput
+      end
+      item
+        Position = 2
+        Name = 'P_NOME'
+        DataType = ftString
+        FDDataType = dtAnsiString
+        ParamType = ptInput
+        Size = 100
+      end
+      item
+        Position = 3
+        Name = 'P_RA'
+        DataType = ftFixedChar
+        FDDataType = dtAnsiString
+        ParamType = ptInput
+        Size = 5
+      end
+      item
+        Position = 4
+        Name = 'P_ENDERECO'
+        DataType = ftString
+        FDDataType = dtAnsiString
+        ParamType = ptInput
+        Size = 200
+      end
+      item
+        Position = 5
+        Name = 'P_CEP'
+        DataType = ftFixedChar
+        FDDataType = dtAnsiString
+        ParamType = ptInput
+        Size = 8
+      end
+      item
+        Position = 6
+        Name = 'P_TELEFONE'
+        DataType = ftString
+        FDDataType = dtAnsiString
+        ParamType = ptInput
+      end
+      item
+        Position = 7
+        Name = 'P_CELULAR'
+        DataType = ftString
+        FDDataType = dtAnsiString
+        ParamType = ptInput
+      end
+      item
+        Position = 8
+        Name = 'P_NASCIMENTO'
+        DataType = ftString
+        FDDataType = dtAnsiString
+        ParamType = ptInput
+      end>
+  end
+  object FDStoredProcExcluiAluno: TFDStoredProc
+    Connection = FDConn
+    SchemaName = 'LOCALDB'
+    StoredProcName = 'SP_EXCLUI_ALUNO'
+    Left = 64
+    Top = 248
+    ParamData = <
+      item
+        Position = 1
+        Name = 'P_ID'
+        DataType = ftBCD
+        FDDataType = dtBCD
+        Precision = 5
+        ParamType = ptInput
+      end>
   end
 end
