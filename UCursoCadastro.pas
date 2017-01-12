@@ -69,10 +69,23 @@ end;
 
 procedure TFrmCursoCadastro.FormClose(Sender: TObject;
   var Action: TCloseAction);
+var
+  Curso: TCurso;
 begin
 
   Action := caFree;
   FrmCursoCadastro := Nil;
+
+  try
+
+    Curso := TCurso.Create;
+    Curso.BuscarCursos;
+
+  finally
+
+    FreeAndNil(Curso);
+
+  end;
 
 end;
 

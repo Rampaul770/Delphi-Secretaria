@@ -7,7 +7,7 @@ P_CURSO_ID          IN CURSO.ID%TYPE
 )
 IS
 
-V_COUNT     NUMBER(5);
+V_COUNT NUMBER(5);
 
 ID_INVALIDO         EXCEPTION;        
 NOME_INVALIDO       EXCEPTION;
@@ -21,6 +21,14 @@ BEGIN
         IF P_ID IS NULL THEN
             RAISE ID_INVALIDO;
         END IF;
+        
+        SELECT COUNT(*) INTO V_COUNT
+        FROM MATERIA
+        WHERE ID = P_ID;
+        
+        IF V_COUNT = 0 THEN
+            RAISE ID_INVALIDO;
+        END IF;            
 
     EXCEPTION    
     
@@ -73,7 +81,7 @@ BEGIN
         SET NOME = P_NOME, DESCRICAO = P_DESCRICAO
         WHERE ID = P_ID;
         
-        UPDATE MATERIA_CURSO
+        UPDATE CURSO_MATERIA
         SET CURSO_ID = P_CURSO_ID
         WHERE MATERIA_ID = P_ID;
         

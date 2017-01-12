@@ -1,0 +1,376 @@
+unit UGradeCadastro;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Mask, Vcl.StdCtrls, Vcl.ExtCtrls,
+  UData, UCurso, UMateria, UAluno, UGrade,
+  Vcl.DBCtrls, System.ImageList, Vcl.ImgList;
+
+type
+  TFrmGradeCadastro = class(TForm)
+    PnlCadastro: TPanel;
+    Label1: TLabel;
+    LblCursoRequerido: TLabel;
+    LblMateriaRequerido: TLabel;
+    LblMensagemRequerido: TLabel;
+    BtnCancelar: TButton;
+    BtnGravar: TButton;
+    Label3: TLabel;
+    DbcCurso: TDBLookupComboBox;
+    LblNomeRequerido: TLabel;
+    DbcMateria: TDBLookupComboBox;
+    Label2: TLabel;
+    Label4: TLabel;
+    DbcAluno: TDBLookupComboBox;
+    LblAlunoRequerido: TLabel;
+    TxtNome: TButtonedEdit;
+    ImageList1: TImageList;
+    DblNomes: TDBLookupListBox;
+    procedure BtnCancelarClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure BtnGravarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormActivate(Sender: TObject);
+    procedure DbcCursoCloseUp(Sender: TObject);
+    procedure TxtNomeRightButtonClick(Sender: TObject);
+    procedure DblNomesDblClick(Sender: TObject);
+  private
+    { Private declarations }
+    function CampoObrigatorioValido(): Boolean;
+    procedure CadastrarGrade;
+    procedure AtualizarGrade(ID: Integer);
+  public
+    { Public declarations }
+    Acao: String;
+    ID: Integer;
+    KeyValueCurso: Integer;
+    KeyValueMateria: Integer;
+    KeyValueAluno: Integer;
+  end;
+
+var
+  FrmGradeCadastro: TFrmGradeCadastro;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFrmGradeCadastro.BtnCancelarClick(Sender: TObject);
+begin
+
+  Close;
+  FrmGradeCadastro := Nil;
+
+end;
+
+procedure TFrmGradeCadastro.BtnGravarClick(Sender: TObject);
+begin
+
+  if CampoObrigatorioValido then
+    if Acao = 'INSERT' then
+      begin
+        CadastrarGrade;
+        Close;
+      end
+    else
+      begin
+        AtualizarGRade(ID);
+        Close;
+      end;
+
+end;
+
+procedure TFrmGradeCadastro.FormActivate(Sender: TObject);
+var
+  Curso: TCurso;
+  Aluno: TAluno;
+begin
+
+  try
+
+    UData.DataModuleSecretaria.FDConn.Connected := True;
+
+    Curso := TCurso.Create;
+
+    with DbcCurso do
+      begin
+        ListField := 'NOME';
+        KeyField := 'ID';
+        ListSource := Curso.BuscarCursos;
+        KeyValue := KeyValueCurso;
+      end;
+
+    Aluno := TAluno.Create;
+
+    with DbcAluno do
+      begin
+        ListField := 'NOME';
+        KeyField := 'ID';
+        ListSource := Aluno.BuscarAlunos;
+        KeyValue := KeyValueAluno;
+      end;
+
+  finally
+
+    FreeAndNil(Curso);
+    FreeAndNil(Aluno);
+
+  end;
+
+end;
+
+procedure TFrmGradeCadastro.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+var
+  Grade: TGrade;
+begin
+
+  Action := caFree;
+  FrmGradeCadastro := Nil;
+
+
+  try
+
+    Grade := TGrade.Create;
+    Grade.BuscarGrades;
+
+  finally
+
+    FreeAndNil(Grade);
+
+  end;
+
+
+end;
+
+procedure TFrmGradeCadastro.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+  if Key = VK_ESCAPE then
+    BtnCancelarClick(Sender);
+
+end;
+
+function TFrmGradeCadastro.CampoObrigatorioValido(): Boolean;
+var
+  MostraMensagem: Boolean;
+  Foco: Integer;
+begin
+
+  MostraMensagem := False;
+  Foco := 0;
+
+  if TxtNome.Text = '' then
+    begin
+      LblNomeRequerido.Visible := True;
+      MostraMensagem := True;
+      If Foco = 0 Then Foco := 1;
+    end
+  else
+    LblNomeRequerido.Visible := False;
+
+  if DbcCurso.Text = '' then
+    begin
+      LblCursoRequerido.Visible := True;
+      MostraMensagem := True;
+      If Foco = 0 Then Foco := 2;
+    end
+  else
+    LblCursoRequerido.Visible := False;
+
+  if DbcMateria.Text = '' then
+    begin
+      LblMateriaRequerido.Visible := True;
+      MostraMensagem := True;
+      If Foco = 0 Then Foco := 3;
+    end
+  else
+    LblMateriaRequerido.Visible := False;
+
+  if DbcAluno.Text = '' then
+    begin
+      LblAlunoRequerido.Visible := True;
+      MostraMensagem := True;
+      If Foco = 0 Then Foco := 4;
+    end
+  else
+    LblAlunoRequerido.Visible := False;
+
+
+  if Foco = 1 then
+    TxtNome.SetFocus
+  else if Foco = 2 then
+    DbcCurso.SetFocus
+  else if Foco = 3 then
+    DbcMateria.SetFocus
+  else if Foco = 4 then
+    DbcAluno.SetFocus;
+
+
+  if MostraMensagem then
+    begin
+      LblMensagemRequerido.Visible := True;
+      Result := False;
+    end
+  else
+    begin
+      LblMensagemRequerido.Visible := False;
+      Result := True;
+    end
+
+end;
+
+procedure TFrmGradeCadastro.DbcCursoCloseUp(Sender: TObject);
+var
+  Materia: TMateria;
+  CursoID: Integer;
+begin
+
+  try
+
+    UData.DataModuleSecretaria.FDConn.Connected := True;
+
+    Materia := TMateria.Create;
+
+    CursoID := DbcCurso.KeyValue;
+
+    with DbcMateria do
+      begin
+        ListField := 'MATERIANOME';
+        KeyField := 'MATERIAID';
+        ListSource := Materia.BuscarMateriasCurso(CursoID);
+        KeyValue := KeyValueMateria;
+      end;
+
+  finally
+
+    FreeAndNil(Materia);
+
+  end;
+
+end;
+
+procedure TFrmGradeCadastro.DblNomesDblClick(Sender: TObject);
+begin
+
+  TxtNome.Text := DblNomes.KeyValue;
+
+  DblNomes.Visible := False;
+
+end;
+
+procedure TFrmGradeCadastro.FormShow(Sender: TObject);
+begin
+
+  if Acao = 'INSERT' then
+    FrmGradeCadastro.Caption := 'Cadastrar Grade'
+  else
+    FrmGradeCadastro.Caption := 'Atualizar cadastro';
+
+end;
+
+procedure TFrmGradeCadastro.TxtNomeRightButtonClick(Sender: TObject);
+var
+  GRade: TGrade;
+begin
+
+  if DblNomes.Visible = False then
+    begin
+
+      DblNomes.Visible := True;
+
+      try
+
+        UData.DataModuleSecretaria.FDConn.Connected := True;
+
+        Grade := TGrade.Create;
+
+        with DblNomes do
+          begin
+            ListField := 'NOME';
+            KeyField := 'NOME';
+            ListSource := Grade.BuscarNomes;
+          end;
+
+      finally
+
+        FreeAndNil(Grade);
+
+      end;
+    end
+  else
+    DblNomes.Visible := False;
+
+end;
+
+procedure TFrmGradeCadastro.CadastrarGrade;
+var
+  Grade: TGrade;
+  Retorno: String;
+begin
+
+  try
+
+    Grade := TGrade.Create;
+
+    with Grade do
+    begin
+      Nome := TxtNome.Text;
+      CursoID := DbcCurso.KeyValue;
+      MateriaID := DbcMateria.KeyValue;
+      AlunoID := DbcAluno.KeyValue;
+    end;
+
+    Retorno := Grade.CadastrarGrade;
+
+    if Retorno = '' then
+      MessageBox(FrmGradeCadastro.Handle, 'Grade cadastrada com sucesso!', 'Aviso', MB_OK or MB_ICONINFORMATION)
+    else
+      MessageBox(FrmGradeCadastro.Handle, PChar('Falha ao cadastrar a grade!' + Char(13)  + Char(13) + 'Erro: ' + Retorno), 'Erro', MB_OK or MB_ICONSTOP);
+
+  finally
+
+    FreeAndNil(Grade);
+
+  end;
+
+end;
+
+procedure TFrmGradeCadastro.AtualizarGrade(ID: Integer);
+var
+  Grade: TGrade;
+  Retorno: String;
+begin
+
+  try
+
+    Grade := TGrade.Create(ID);
+
+    with Grade do
+    begin
+      Nome := TxtNome.Text;
+      CursoID := DbcCurso.KeyValue;
+      MateriaID := DbcMateria.KeyValue;
+      AlunoID := DbcAluno.KeyValue;
+    end;
+
+    Retorno := Grade.AtualizarGrade(ID);
+
+    if Retorno = '' then
+      MessageBox(FrmGradeCadastro.Handle, 'Grade atualizada com sucesso!', 'Aviso', MB_OK or MB_ICONINFORMATION)
+    else
+      MessageBox(FrmGradeCadastro.Handle, PChar('Falha ao atualizar o cadastro da grade!' + Char(13)  + Char(13) + 'Erro: ' + Retorno), 'Erro', MB_OK or MB_ICONSTOP);
+
+  finally
+
+    FreeAndNil(Grade);
+
+  end;
+
+end;
+
+end.

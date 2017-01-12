@@ -6,6 +6,8 @@ P_DESCRICAO     IN CURSO.DESCRICAO%TYPE
 )
 IS
        
+V_COUNT NUMBER(5);       
+       
 ID_INVALIDO         EXCEPTION;
 NOME_INVALIDO       EXCEPTION;
 DESCRICAO_INVALIDA  EXCEPTION;
@@ -17,6 +19,14 @@ BEGIN
         IF P_ID IS NULL THEN
             RAISE ID_INVALIDO;
         END IF;
+        
+        SELECT COUNT(*) INTO V_COUNT
+        FROM CURSO
+        WHERE ID = P_ID;
+        
+        IF V_COUNT = 0 THEN
+            RAISE ID_INVALIDO;
+        END IF;          
 
     EXCEPTION    
     

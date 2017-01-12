@@ -79,10 +79,23 @@ end;
 
 procedure TFrmAlunoCadastro.FormClose(Sender: TObject;
   var Action: TCloseAction);
+var
+  Aluno: TAluno;
 begin
 
   Action := caFree;
   FrmAlunoCadastro := Nil;
+
+  try
+
+    Aluno := TAluno.Create;
+    Aluno.BuscarAlunos;
+
+  finally
+
+    FreeAndNil(Aluno);
+
+  end;
 
 end;
 

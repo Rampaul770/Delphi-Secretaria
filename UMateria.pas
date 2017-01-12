@@ -48,6 +48,7 @@ function ExcluirMateria(): String;
 function BuscarMaterias(): TDataSource; overload;
 function BuscarMaterias(Nome: String): TDataSource; overload;
 function BuscarMateriasDescricao(Descricao: String): TDataSource;
+function BuscarMateriasCurso(CursoID: Integer): TDataSource;
 
 end;
 
@@ -218,7 +219,7 @@ begin
       Close;
       SQL.Clear;
       SQL.Add('SELECT CURSOID, CURSONOME, MATERIAID, MATERIANOME, MATERIADESCRICAO ' +
-              'FROM VW_MATERIA_CURSO ' +
+              'FROM VW_CURSO_MATERIA ' +
               'WHERE MATERIAID = ' + IntToStr(ID));
 
       Open();
@@ -245,7 +246,32 @@ begin
         Close;
         SQL.Clear;
         SQL.Add('SELECT CURSOID, CURSONOME, MATERIAID, MATERIANOME, MATERIADESCRICAO ' +
-                'FROM VW_MATERIA_CURSO ' +
+                'FROM VW_CURSO_MATERIA ' +
+                'ORDER BY MATERIAID');
+
+        Open();
+      end;
+
+      DtsMateria.DataSet := FDQueryMateria;
+      Result := DtsMateria;
+    end;
+
+end;
+
+function TMateria.BuscarMateriasCurso(CursoID: Integer): TDataSource;
+begin
+
+    with UData.DataModuleSecretaria do
+    begin
+      FDConn.Connected := True;
+
+      with FDQueryMateria do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Add('SELECT CURSOID, CURSONOME, MATERIAID, MATERIANOME, MATERIADESCRICAO ' +
+                'FROM VW_CURSO_MATERIA ' +
+                'WHERE CURSOID = ' + IntToStr(CursoID) + ' ' +
                 'ORDER BY MATERIAID');
 
         Open();
@@ -269,7 +295,7 @@ begin
         Close;
         SQL.Clear;
         SQL.Add('SELECT CURSOID, CURSONOME, MATERIAID, MATERIANOME, MATERIADESCRICAO ' +
-                'FROM VW_MATERIA_CURSO ' +
+                'FROM VW_CURSO_MATERIA ' +
                 'WHERE MATERIANOME LIKE ' + Chr(39) + '%' + Nome + '%' + Chr(39) + ' ' +
                 'ORDER BY MATERIAID');
 
@@ -294,7 +320,7 @@ begin
         Close;
         SQL.Clear;
         SQL.Add('SELECT CURSOID, CURSONOME, MATERIAID, MATERIANOME, MATERIADESCRICAO ' +
-                'FROM VW_MATERIA_CURSO ' +
+                'FROM VW_CURSO_MATERIA ' +
                 'WHERE MATERIADESCRICAO LIKE ' + Chr(39) + '%' + Descricao + '%' + Chr(39) + ' ' +
                 'ORDER BY MATERIAID');
 

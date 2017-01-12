@@ -11,7 +11,7 @@ uses
   FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.Client, FireDAC.Comp.DataSet,
   FireDAC.Comp.UI, FireDAC.Phys.Oracle,
-  UData, UGrade, UFuncUtils,
+  UData, UGrade, UGradeCadastro, UFuncUtils,
   Vcl.ComCtrls;
 
 type
@@ -37,6 +37,8 @@ type
     TxtCurso: TEdit;
     RbtGrade: TRadioButton;
     TxtGrade: TEdit;
+    N1: TMenuItem;
+    Sair2: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure Sair1Click(Sender: TObject);
@@ -54,6 +56,9 @@ type
       Shift: TShiftState);
     procedure RbtCursoClick(Sender: TObject);
     procedure RbtGradeClick(Sender: TObject);
+    procedure DbgGradeDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure Sair2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -71,32 +76,33 @@ implementation
 procedure TFrmGradeArea.Atualizar1Click(Sender: TObject);
 begin
 
-//  if DbgMateria.Fields[0].Text = '' then
-//    Exit;
-//
-//  If not Assigned(FrmMateriaCadastro) Then
-//    FrmMateriaCadastro := TFrmMateriaCadastro.Create(Application);
-//
-//  with FrmMateriaCadastro do
-//  begin
-//    Acao := 'UPDATE';
-//    ID := StrToInt(DbgMateria.Fields[0].Text);
-//    TxtNome.Text := DbgMateria.Fields[1].Text;
-//    TxtDescricao.Text := DbgMateria.Fields[2].Text;
-//    KeyValueCurso := StrToInt(DbgMateria.Fields[4].Text);
-//    ShowModal;
-//  end;
+  if DbgGrade.Fields[0].Text = '' then
+    Exit;
+
+  If not Assigned(FrmGradeCadastro) Then
+    FrmGradeCadastro := TFrmGradeCadastro.Create(Application);
+
+  with FrmGradeCadastro do
+  begin
+    Acao := 'UPDATE';
+    ID := StrToInt(DbgGrade.Fields[0].Text);
+    TxtNome.Text := DbgGrade.Fields[1].Text;
+    KeyValueCurso := StrToInt(DbgGrade.Fields[2].Text);
+    KeyValueMateria := StrToInt(DbgGrade.Fields[4].Text);
+    KeyValueAluno := StrToInt(DbgGrade.Fields[6].Text);
+    ShowModal;
+  end;
 
 end;
 
 procedure TFrmGradeArea.Cadastrar1Click(Sender: TObject);
 begin
 
-//  If not Assigned(FrmMateriaCadastro) Then
-//    FrmMateriaCadastro := TFrmMateriaCadastro.Create(Application);
-//
-//  FrmMateriaCadastro.Acao := 'INSERT';
-//  FrmMateriaCadastro.ShowModal;
+  If not Assigned(FrmGradeCadastro) Then
+    FrmGradeCadastro := TFrmGradeCadastro.Create(Application);
+
+  FrmGradeCadastro.Acao := 'INSERT';
+  FrmGradeCadastro.ShowModal;
 
 end;
 
@@ -111,6 +117,30 @@ procedure TFrmGradeArea.DbgGradeDblClick(Sender: TObject);
 begin
 
   Atualizar1Click(Sender);
+
+end;
+
+procedure TFrmGradeArea.DbgGradeDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+
+  //Começa Zebrando a linha ímpar
+  with DbgGrade do
+    begin
+      if not (gdSelected in State) then
+        if not odd(DataModuleSecretaria.FDQueryGrade.RecNo) then
+          Canvas.Brush.Color := clWhite
+        else
+          Canvas.Brush.Color:= clMoneyGreen
+      else
+        begin
+          Canvas.Brush.Color:= clSkyBlue;
+          Canvas.Font.Style := [fsBold];
+        end;
+
+       Canvas.FillRect(Rect);
+       DefaultDrawColumnCell(Rect, DataCol, Column, State);
+    end;
 
 end;
 
@@ -129,25 +159,27 @@ var
   ID: Integer;
 begin
 
-//  if DbgGrade.Fields[0].Text = '' then
-//    Exit;
-//
-//  ID := StrToInt(DbgGrade.Fields[0].Text);
-//
-//  if MessageBox(Handle, 'Deseja realmente excluir essa grade?',
-//                'Aviso', MB_YESNO or MB_ICONQUESTION) = ID_YES then
-//    begin
-//      try
-//
-//        Grade := TGrade.Create(ID);
-//        Grade.ExcluirGrade();
-//
-//      finally
-//
-//        FreeAndNil(Grade);
-//
-//      end;
-//    end;
+  if DbgGrade.Fields[0].Text = '' then
+    Exit;
+
+  ID := StrToInt(DbgGrade.Fields[0].Text);
+
+  if MessageBox(Handle, 'Deseja realmente excluir essa grade?',
+                'Aviso', MB_YESNO or MB_ICONQUESTION) = ID_YES then
+    begin
+      try
+
+        Grade := TGrade.Create(ID);
+        Grade.ExcluirGrade();
+
+        Grade.BuscarGrades;
+
+      finally
+
+        FreeAndNil(Grade);
+
+      end;
+    end;
 
 
 end;
@@ -172,6 +204,13 @@ begin
 
   Close;
   FrmGradeArea := Nil;
+
+end;
+
+procedure TFrmGradeArea.Sair2Click(Sender: TObject);
+begin
+
+  Sair1Click(sender);
 
 end;
 
@@ -318,6 +357,7 @@ begin
 
   AtualizarGrid;
 
+  RbtGrade.Checked := True;
   TxtGrade.SetFocus;
 
 end;

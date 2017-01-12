@@ -1,14 +1,19 @@
 CREATE OR REPLACE PROCEDURE SP_INSERE_GRADE
 (
 P_NOME              IN GRADE.NOME%TYPE,
-P_MATERIA_CURSO_ID  IN GRADE.MATERIA_CURSO_ID%TYPE,
-P_ALUNO_ID          IN GRADE.ALUNO_ID%TYPE
+P_CURSO_ID          IN CURSO.ID%TYPE,
+P_MATERIA_ID        IN MATERIA.ID%TYPE,
+P_ALUNO_ID          IN ALUNO.ID%TYPE
 )
 IS
 
-NOME_INVALIDO               EXCEPTION;
-MATERIA_CURSO_ID_INVALIDO   EXCEPTION;
-ALUNO_ID_INVALIDO           EXCEPTION;
+V_COUNT             NUMBER(5);
+V_CURSO_MATERIA_ID  CURSO_MATERIA.ID%TYPE;
+
+NOME_INVALIDO       EXCEPTION;
+CURSO_ID_INVALIDO   EXCEPTION;
+ALUNO_ID_INVALIDO   EXCEPTION;
+MATERIA_ID_INVALIDO EXCEPTION;
 
 BEGIN
 
@@ -25,16 +30,45 @@ BEGIN
 
     END;
     
-    BEGIN -- Validação do parâmetro ID da Materia
+    BEGIN -- Validação do parâmetro ID do Curso
 
-        IF P_MATERIA_CURSO_ID IS NULL THEN
-            RAISE MATERIA_CURSO_ID_INVALIDO;
+        IF P_CURSO_ID IS NULL THEN
+            RAISE CURSO_ID_INVALIDO;
         END IF;
+        
+        SELECT COUNT(*) INTO V_COUNT
+        FROM CURSO
+        WHERE ID = P_CURSO_ID;
+        
+        IF V_COUNT = 0 THEN
+            RAISE CURSO_ID_INVALIDO;
+        END IF;        
+
+    EXCEPTION    
+            
+        WHEN CURSO_ID_INVALIDO THEN
+            RAISE_APPLICATION_ERROR(-20002, 'CÓDIGO ID DO CURSO INVÁLIDO!');
+        
+    END;
+    
+    BEGIN -- Validação do parâmetro ID da Matéria
+
+        IF P_MATERIA_ID IS NULL THEN
+            RAISE MATERIA_ID_INVALIDO;            
+        END IF;        
+        
+        SELECT COUNT(*) INTO V_COUNT
+        FROM MATERIA
+        WHERE ID = P_MATERIA_ID;
+        
+        IF V_COUNT = 0 THEN
+            RAISE MATERIA_ID_INVALIDO;
+        END IF;         
 
     EXCEPTION    
 
-        WHEN MATERIA_CURSO_ID_INVALIDO THEN
-            RAISE_APPLICATION_ERROR(-20002, 'CÓDIGO ID DA MATERIA INVÁLIDO!');
+        WHEN MATERIA_ID_INVALIDO THEN
+            RAISE_APPLICATION_ERROR(-20002, 'CÓDIGO ID DA MATÉRIA INVÁLIDO!');
         
     END;
     
@@ -43,6 +77,14 @@ BEGIN
         IF P_ALUNO_ID IS NULL THEN
             RAISE ALUNO_ID_INVALIDO;
         END IF;
+        
+        SELECT COUNT(*) INTO V_COUNT
+        FROM ALUNO
+        WHERE ID = P_ALUNO_ID;
+        
+        IF V_COUNT = 0 THEN
+            RAISE ALUNO_ID_INVALIDO;
+        END IF;  
         
     EXCEPTION    
 
@@ -53,8 +95,22 @@ BEGIN
     
     BEGIN
     
-        INSERT INTO GRADE(ID, MATERIA_CURSO_ID, ALUNO_ID)
-        VALUES(SQ_GRADE.NEXTVAL, P_MATERIA_CURSO_ID, P_ALUNO_ID);
+        SELECT ID INTO V_CURSO_MATERIA_ID
+        FROM CURSO_MATERIA
+        WHERE MATERIA_ID = P_MATERIA_ID
+        AND CURSO_ID = P_CURSO_ID;
+        
+    EXCEPTION
+        
+        WHEN NO_DATA_FOUND THEN
+            RAISE_APPLICATION_ERROR(-20004, 'CÓDIGO ID DE MATÉRIA OU CURSO INVÁLIDOS!');
+            
+    END;
+    
+    BEGIN
+    
+        INSERT INTO GRADE(ID, NOME, CURSO_MATERIA_ID, ALUNO_ID)
+        VALUES(SQ_GRADE.NEXTVAL, P_NOME, V_CURSO_MATERIA_ID, P_ALUNO_ID);
         
         COMMIT;
     
@@ -63,7 +119,7 @@ BEGIN
         WHEN OTHERS THEN
             BEGIN
                 ROLLBACK;
-                RAISE_APPLICATION_ERROR(-20004, 'ERRO INESPERADO - ' || SQLERRM);
+                RAISE_APPLICATION_ERROR(-20005, 'ERRO INESPERADO - ' || SQLERRM);
             END;
     
     END;

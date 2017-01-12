@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="3187DA33-606C-496D-73C4-ACEFAA65C8E9" containerWithKeyObject="F92BF0E3-C078-2C86-7465-6E91FF7C4B2F" localFKIndex="02506502-2292-CF90-8F06-EAB6E9506EF7" name="GRADE_MATERIA_CURSO_FK">
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="3187DA33-606C-496D-73C4-ACEFAA65C8E9" containerWithKeyObject="F92BF0E3-C078-2C86-7465-6E91FF7C4B2F" localFKIndex="02506502-2292-CF90-8F06-EAB6E9506EF7" name="GRADE_CURSO_MATERIA_FK">
 <createdBy>andre</createdBy>
 <createdTime>2017-01-06 22:19:02 UTC</createdTime>
 <ownerDesignName>MER_ESCOLA</ownerDesignName>

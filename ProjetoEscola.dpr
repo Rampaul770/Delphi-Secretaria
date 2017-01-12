@@ -16,7 +16,8 @@ uses
   UCursoArea in 'UCursoArea.pas' {FrmCursoArea},
   UCursoCadastro in 'UCursoCadastro.pas' {FrmCursoCadastro},
   UGrade in 'UGrade.pas',
-  UGradeArea in 'UGradeArea.pas' {FrmGradeArea};
+  UGradeArea in 'UGradeArea.pas' {FrmGradeArea},
+  UGradeCadastro in 'UGradeCadastro.pas' {FrmGradeCadastro};
 
 {$R *.res}
 
@@ -33,5 +34,6 @@ begin
   Application.CreateForm(TFrmCursoArea, FrmCursoArea);
   Application.CreateForm(TFrmCursoCadastro, FrmCursoCadastro);
   Application.CreateForm(TFrmGradeArea, FrmGradeArea);
+  Application.CreateForm(TFrmGradeCadastro, FrmGradeCadastro);
   Application.Run;
 end.

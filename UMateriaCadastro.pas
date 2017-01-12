@@ -98,10 +98,23 @@ end;
 
 procedure TFrmMateriaCadastro.FormClose(Sender: TObject;
   var Action: TCloseAction);
+var
+  Materia: TMateria;
 begin
 
   Action := caFree;
   FrmMateriaCadastro := Nil;
+
+  try
+
+    Materia := TMateria.Create;
+    Materia.BuscarMaterias;
+
+  finally
+
+    FreeAndNil(Materia);
+
+  end;
 
 end;
 

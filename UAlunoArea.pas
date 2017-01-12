@@ -33,6 +33,8 @@ type
     DbgAluno: TDBGrid;
     RbtNome: TRadioButton;
     RbtRA: TRadioButton;
+    N1: TMenuItem;
+    Sair2: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Sair1Click(Sender: TObject);
     procedure Cadastrar1Click(Sender: TObject);
@@ -48,6 +50,9 @@ type
     procedure DbgAlunoKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure FormActivate(Sender: TObject);
+    procedure DbgAlunoDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure Sair2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -112,6 +117,30 @@ begin
 
 end;
 
+procedure TFrmAlunoArea.DbgAlunoDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+
+  //Começa Zebrando a linha ímpar
+  with DbgAluno do
+    begin
+      if not (gdSelected in State) then
+        if not odd(DataModuleSecretaria.FDQueryAluno.RecNo) then
+          Canvas.Brush.Color := clWhite
+        else
+          Canvas.Brush.Color:= clMoneyGreen
+      else
+        begin
+          Canvas.Brush.Color:= clSkyBlue;
+          Canvas.Font.Style := [fsBold];
+        end;
+
+       Canvas.FillRect(Rect);
+       DefaultDrawColumnCell(Rect, DataCol, Column, State);
+    end;
+
+end;
+
 procedure TFrmAlunoArea.DbgAlunoKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
@@ -139,6 +168,8 @@ begin
 
         Aluno := TAluno.Create(ID);
         Aluno.ExcluirAluno();
+
+        Aluno.BuscarAlunos;
 
       finally
 
@@ -170,6 +201,13 @@ begin
 
   Close;
   FrmAlunoArea := Nil;
+
+end;
+
+procedure TFrmAlunoArea.Sair2Click(Sender: TObject);
+begin
+
+  Sair1Click(sender);
 
 end;
 

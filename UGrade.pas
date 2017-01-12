@@ -13,8 +13,9 @@ private
 // atributos privados
 
 Fid: Integer;
-FnomeGrade: Integer;
-Fmateriacursoid: Integer;
+Fnome: String;
+Fcursoid: Integer;
+Fmateriaid: Integer;
 Falunoid: Integer;
 
 protected
@@ -26,7 +27,11 @@ public
 // atibutos e metodos publicos
 // propiedade publicas
 
-property MateriaCursoID: Integer read Fmateriacursoid;
+
+property ID: Integer read Fid;
+property Nome: String read Fnome write Fnome;
+property CursoID: Integer read Fcursoid write Fcursoid;
+property MateriaID: Integer read Fmateriaid write Fmateriaid;
 property AlunoID: Integer read Falunoid write Falunoid;
 
 
@@ -48,6 +53,7 @@ function BuscarGrades(Nome: String): TDataSource; overload;
 function BuscarCursos(Nome: String): TDataSource;
 function BuscarMaterias(Nome: String): TDataSource;
 function BuscarAlunos(Nome: String): TDataSource;
+function BuscarNomes(): TDataSource;
 
 end;
 
@@ -93,8 +99,9 @@ begin
 
       with FDStoredProcInsereGrade do
       begin
-        ParamByName('P_NOME').Value := Fnomegrade;
-        ParamByName('P_MATERIA_CURSO_ID').Value := Fmateriacursoid;
+        ParamByName('P_NOME').Value := Fnome;
+        ParamByName('P_CURSO_ID').Value := Fcursoid;
+        ParamByName('P_MATERIA_ID').Value := Fmateriaid;
         ParamByName('P_ALUNO_ID').Value := Falunoid;
         ExecProc;
       end;
@@ -112,7 +119,8 @@ begin
         20001 : retorno := '20001 - NOME INVÁLIDO!';
         20002 : retorno := '20002 - CÓDIGO ID DA MATERIA INVÁLIDO!';
         20003 : retorno := '20003 - CÓDIGO ID DE ALUNO INVÁLIDO!';
-        20004 : retorno := '20004 - ERRO INESPERADO!';
+        20004 : retorno := '20004 - CÓDIGO ID DE MATÉRIA OU CURSO INVÁLIDOS!';
+        20005 : retorno := '20005 - ERRO INESPERADO!';
       End;
 
   end;
@@ -132,11 +140,12 @@ begin
     begin
       FDConn.Connected := True;
 
-      with FDStoredProcAtualizaMateria do
+      with FDStoredProcAtualizaGrade do
       begin
         ParamByName('P_ID').Value := Fid;
-        ParamByName('P_NOME').Value := Fnomegrade;
-        ParamByName('P_MATERIA_CURSO_ID').Value := Fmateriacursoid;
+        ParamByName('P_NOME').Value := Fnome;
+        ParamByName('P_CURSO_ID').Value := Fcursoid;
+        ParamByName('P_MATERIA_ID').Value := Fmateriaid;
         ParamByName('P_ALUNO_ID').Value := Falunoid;
         ExecProc;
       end;
@@ -151,11 +160,13 @@ begin
       //retorno := IntToStr(Ex.Errors[0].ErrorCode);
 
       Case Ex.Errors[0].ErrorCode of
-        20001 : retorno := '20001 - NOME INVÁLIDO!';
-        20002 : retorno := '20002 - CÓDIGO ID DA GRADE INVÁLIDO!';
-        20003 : retorno := '20003 - CODIGO ID DA MATERIA INVÁLIDO!';
-        20004 : retorno := '20004 - CODIGO ID DE ALUNO INVÁLIDO!';
-        20005 : retorno := '20005 - ERRO INESPERADO';
+        20001 : retorno := 'CÓDIGO ID DA GRADE INVÁLIDO!';
+        20002 : retorno := 'NOME INVÁLIDO!';
+        20003 : retorno := 'CÓDIGO ID DO CURSO INVÁLIDO!';
+        20004 : retorno := 'CÓDIGO ID DA MATÉRIA INVÁLIDO!';
+        20005 : retorno := 'CÓDIGO ID DE ALUNO INVÁLIDO!';
+        20006 : retorno := 'CÓDIGO ID DE MATÉRIA OU CURSO INVÁLIDOS!';
+        20007 : retorno := 'ERRO INESPERADO';
       End;
 
   end;
@@ -169,7 +180,7 @@ var
   retorno: String;
 begin
 
-  if Self.Fmateriacursoid > 0 then
+  if Self.Fid > 0 then
   begin
 
     try
@@ -178,9 +189,9 @@ begin
       begin
         FDConn.Connected := True;
 
-        with FDStoredProcExcluiMateria do
+        with FDStoredProcExcluiGrade do
         begin
-          ParamByName('P_ID').Value := Self.Fmateriacursoid;
+          ParamByName('P_ID').Value := Self.Fid;
           ExecProc;
         end;
 
@@ -213,18 +224,20 @@ begin
   begin
     FDConn.Connected := True;
 
-    with FDQueryMateria do
+    with FDQueryGrade do
     begin
       Close;
       SQL.Clear;
-      SQL.Add('SELECT MATERIA_CURSO_ID, ALUNO_ID ' +
-              'FROM GRADE ' +
-              'WHERE MATERIA_CURSO_ID = ' + IntToStr(ID));
+      SQL.Add('SELECT ID, GRADENOME, CURSOID, CURSONOME, MATERIAID, MATERIANOME, ALUNOID, ALUNORA, ALUNONOME ' +
+              'FROM VW_GRADE ' +
+              'WHERE ID = ' + IntToStr(ID));
 
       Open();
     end;
 
-    self.Fmateriacursoid := ID;
+    self.Fid := ID;
+    self.Fnome := FDQueryGradeGRADENOME.Value;
+    self.Fmateriaid := FDQueryGradeMATERIAID.AsInteger;
     Self.Falunoid := FDQueryGradeALUNOID.AsInteger;
 
   end;
@@ -249,8 +262,32 @@ begin
         Open();
       end;
 
-      DtsMateria.DataSet := FDQueryMateria;
-      Result := DtsMateria;
+      DtsGrade.DataSet := FDQueryGrade;
+      Result := DtsGrade;
+    end;
+
+end;
+
+function TGrade.BuscarNomes(): TDataSource;
+begin
+
+    with UData.DataModuleSecretaria do
+    begin
+      FDConn.Connected := True;
+
+      with FDQueryGradeNomes do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Add('SELECT DISTINCT NOME ' +
+                'FROM GRADE ' +
+                'ORDER BY NOME');
+
+        Open();
+      end;
+
+      DtsGradeNomes.DataSet := FDQueryGradeNomes;
+      Result := DtsGradeNomes;
     end;
 
 end;
@@ -283,75 +320,78 @@ end;
 function TGrade.BuscarCursos(Nome: String): TDataSource;
 begin
 
-    with UData.DataModuleSecretaria do
+  with UData.DataModuleSecretaria do
+  begin
+    FDConn.Connected := True;
+
+    with FDQueryGrade do
     begin
-      FDConn.Connected := True;
+      Close;
+      SQL.Clear;
+      SQL.Add('SELECT ID, GRADENOME, CURSOID, CURSONOME, MATERIAID, MATERIANOME, ALUNOID, ALUNORA, ALUNONOME ' +
+              'FROM VW_GRADE ' +
+              'WHERE CURSONOME LIKE ' + Chr(39) + '%' + Nome + '%' + Chr(39) + ' ' +
+              'ORDER BY ID');
 
-      with FDQueryGrade do
-      begin
-        Close;
-        SQL.Clear;
-        SQL.Add('SELECT ID, GRADENOME, CURSOID, CURSONOME, MATERIAID, MATERIANOME, ALUNOID, ALUNORA, ALUNONOME ' +
-                'FROM VW_GRADE ' +
-                'WHERE CURSONOME LIKE ' + Chr(39) + '%' + Nome + '%' + Chr(39) + ' ' +
-                'ORDER BY ID');
-
-        Open();
-      end;
-
-      DtsGrade.DataSet := FDQueryGrade;
-      Result := DtsGrade;
+      Open();
     end;
+
+    DtsGrade.DataSet := FDQueryGrade;
+    Result := DtsGrade;
+
+  end;
 
 end;
 
 function TGrade.BuscarMaterias(Nome: String): TDataSource;
 begin
 
-    with UData.DataModuleSecretaria do
+  with UData.DataModuleSecretaria do
+  begin
+    FDConn.Connected := True;
+
+    with FDQueryGrade do
     begin
-      FDConn.Connected := True;
+      Close;
+      SQL.Clear;
+      SQL.Add('SELECT ID, GRADENOME, CURSOID, CURSONOME, MATERIAID, MATERIANOME, ALUNOID, ALUNORA, ALUNONOME ' +
+              'FROM VW_GRADE ' +
+              'WHERE MATERIANOME LIKE ' + Chr(39) + '%' + Nome + '%' + Chr(39) + ' ' +
+              'ORDER BY ID');
 
-      with FDQueryGrade do
-      begin
-        Close;
-        SQL.Clear;
-        SQL.Add('SELECT ID, GRADENOME, CURSOID, CURSONOME, MATERIAID, MATERIANOME, ALUNOID, ALUNORA, ALUNONOME ' +
-                'FROM VW_GRADE ' +
-                'WHERE MATERIANOME LIKE ' + Chr(39) + '%' + Nome + '%' + Chr(39) + ' ' +
-                'ORDER BY ID');
-
-        Open();
-      end;
-
-      DtsGrade.DataSet := FDQueryGrade;
-      Result := DtsGrade;
+      Open();
     end;
+
+    DtsGrade.DataSet := FDQueryGrade;
+    Result := DtsGrade;
+
+  end;
 
 end;
 
 function TGrade.BuscarAlunos(Nome: String): TDataSource;
 begin
 
-    with UData.DataModuleSecretaria do
+  with UData.DataModuleSecretaria do
+  begin
+    FDConn.Connected := True;
+
+    with FDQueryGrade do
     begin
-      FDConn.Connected := True;
+      Close;
+      SQL.Clear;
+      SQL.Add('SELECT ID, GRADENOME, CURSOID, CURSONOME, MATERIAID, MATERIANOME, ALUNOID, ALUNORA, ALUNONOME ' +
+              'FROM VW_GRADE ' +
+              'WHERE ALUNONOME LIKE ' + Chr(39) + '%' + Nome + '%' + Chr(39) + ' ' +
+              'ORDER BY ID');
 
-      with FDQueryGrade do
-      begin
-        Close;
-        SQL.Clear;
-        SQL.Add('SELECT ID, GRADENOME, CURSOID, CURSONOME, MATERIAID, MATERIANOME, ALUNOID, ALUNORA, ALUNONOME ' +
-                'FROM VW_GRADE ' +
-                'WHERE ALUNONOME LIKE ' + Chr(39) + '%' + Nome + '%' + Chr(39) + ' ' +
-                'ORDER BY ID');
-
-        Open();
-      end;
-
-      DtsGrade.DataSet := FDQueryGrade;
-      Result := DtsGrade;
+      Open();
     end;
+
+    DtsGrade.DataSet := FDQueryGrade;
+    Result := DtsGrade;
+
+  end;
 
 end;
 

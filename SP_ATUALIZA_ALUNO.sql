@@ -11,6 +11,8 @@ P_NASCIMENTO IN VARCHAR2
 )
 IS
 
+V_COUNT NUMBER(5);
+
 V_TELEFONE      ALUNO.TELEFONE%TYPE;
 V_CELULAR       ALUNO.CELULAR%TYPE;
 V_NASCIMENTO    ALUNO.NASCIMENTO%TYPE;
@@ -31,6 +33,14 @@ BEGIN
         IF P_ID IS NULL THEN
             RAISE ID_INVALIDO;
         END IF;
+        
+        SELECT COUNT(*) INTO V_COUNT
+        FROM ALUNO
+        WHERE ID = P_ID;
+        
+        IF V_COUNT = 0 THEN
+            RAISE ID_INVALIDO;
+        END IF;          
 
     EXCEPTION    
     

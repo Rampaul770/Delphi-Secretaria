@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="94BC0FFE-A53F-BADD-98E0-69A6D4F3F358" name="MATERIA_CURSO">
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="94BC0FFE-A53F-BADD-98E0-69A6D4F3F358" name="CURSO_MATERIA">
 <createdBy>andre</createdBy>
 <createdTime>2017-01-06 22:08:08 UTC</createdTime>
 <ownerDesignName>MER_ESCOLA</ownerDesignName>
@@ -19,21 +19,6 @@
 <ownDataTypeParameters>,5,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="MATERIA_ID" id="E9E09D07-B4A6-E360-1F97-553EE10F26A3">
-<createdBy>andre</createdBy>
-<createdTime>2017-01-06 22:08:59 UTC</createdTime>
-<ownerDesignName>MER_ESCOLA</ownerDesignName>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT019</logicalDatatype>
-<dataTypePrecision>5</dataTypePrecision>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-<previousColumn>false</previousColumn>
-<autoIncrementCycle>false</autoIncrementCycle>
-<associations>
-<colAssociation fkAssociation="7FD67545-710B-5207-6EB8-8B21E6DEADAB" referredColumn="BC78768A-44AC-4388-7F51-49DBDA841B57"/>
-</associations>
-</Column>
 <Column name="CURSO_ID" id="67658F77-E23D-4FBD-23F6-FDA1A2D05CAC">
 <createdBy>andre</createdBy>
 <createdTime>2017-01-06 22:08:51 UTC</createdTime>
@@ -49,9 +34,24 @@
 <colAssociation fkAssociation="061B4E57-F895-6DD6-D6E4-86D9128D9DE0" referredColumn="ED368054-BDFE-25AE-092B-8BFF545A3821"/>
 </associations>
 </Column>
+<Column name="MATERIA_ID" id="E9E09D07-B4A6-E360-1F97-553EE10F26A3">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-06 22:08:59 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>5</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="7FD67545-710B-5207-6EB8-8B21E6DEADAB" referredColumn="BC78768A-44AC-4388-7F51-49DBDA841B57"/>
+</associations>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
-<ind_PK_UK id="34026060-B9DA-143B-1AE5-610BCD4F7766" name="MATERIA_CURSO_PK">
+<ind_PK_UK id="34026060-B9DA-143B-1AE5-610BCD4F7766" name="CURSO_MATERIA_PK">
 <createdBy>andre</createdBy>
 <createdTime>2017-01-06 22:10:12 UTC</createdTime>
 <ownerDesignName>MER_ESCOLA</ownerDesignName>
@@ -62,7 +62,7 @@
 <colUsage columnID="FF9F4D3C-7C34-C3AF-F7F6-8235C389380A"/>
 </indexColumnUsage>
 </ind_PK_UK>
-<ind_PK_UK id="5E28224A-82FF-B671-BC9B-F6732912D51A" name="MATERIA_CURSO__UN">
+<ind_PK_UK id="5E28224A-82FF-B671-BC9B-F6732912D51A" name="CURSO_MATERIA__UN">
 <createdBy>andre</createdBy>
 <createdTime>2017-01-06 22:17:57 UTC</createdTime>
 <ownerDesignName>MER_ESCOLA</ownerDesignName>
@@ -73,7 +73,7 @@
 <colUsage columnID="E9E09D07-B4A6-E360-1F97-553EE10F26A3"/>
 </indexColumnUsage>
 </ind_PK_UK>
-<ind_PK_UK id="A759BBD9-A019-092C-41DA-25F0973BACE7" name="MATERIA_CURSO_CURSO_FK">
+<ind_PK_UK id="A759BBD9-A019-092C-41DA-25F0973BACE7" name="CURSO_MATERIA_CURSO_FK">
 <createdBy>andre</createdBy>
 <createdTime>2017-01-06 22:08:51 UTC</createdTime>
 <ownerDesignName>MER_ESCOLA</ownerDesignName>
@@ -83,7 +83,7 @@
 <colUsage columnID="67658F77-E23D-4FBD-23F6-FDA1A2D05CAC"/>
 </indexColumnUsage>
 </ind_PK_UK>
-<ind_PK_UK id="B95124D9-67E8-7FBD-786D-24283A046A56" name="MATERIA_CURSO_MATERIA_FK">
+<ind_PK_UK id="B95124D9-67E8-7FBD-786D-24283A046A56" name="CURSO_MATERIA_MATERIA_FK">
 <createdBy>andre</createdBy>
 <createdTime>2017-01-06 22:08:59 UTC</createdTime>
 <ownerDesignName>MER_ESCOLA</ownerDesignName>

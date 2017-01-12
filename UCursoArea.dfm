@@ -44,6 +44,7 @@ object FrmCursoArea: TFrmCursoArea
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
       OnCellClick = DbgCursoCellClick
+      OnDrawColumnCell = DbgCursoDrawColumnCell
       OnDblClick = DbgCursoDblClick
       OnKeyDown = DbgCursoKeyDown
       Columns = <
@@ -170,6 +171,13 @@ object FrmCursoArea: TFrmCursoArea
       object Excluir1: TMenuItem
         Caption = '&Excluir'
         OnClick = Excluir1Click
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object Sair2: TMenuItem
+        Caption = 'Sai&r'
+        OnClick = Sair2Click
       end
     end
     object Recarregar1: TMenuItem

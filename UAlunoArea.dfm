@@ -44,6 +44,7 @@ object FrmAlunoArea: TFrmAlunoArea
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
       OnCellClick = DbgAlunoCellClick
+      OnDrawColumnCell = DbgAlunoDrawColumnCell
       OnDblClick = DbgAlunoDblClick
       OnKeyDown = DbgAlunoKeyDown
       Columns = <
@@ -227,6 +228,13 @@ object FrmAlunoArea: TFrmAlunoArea
       object Excluir1: TMenuItem
         Caption = '&Excluir'
         OnClick = Excluir1Click
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object Sair2: TMenuItem
+        Caption = 'Sai&r'
+        OnClick = Sair2Click
       end
     end
     object Recarregar1: TMenuItem

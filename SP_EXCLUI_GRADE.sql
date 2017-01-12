@@ -8,7 +8,7 @@ GRADE_ID_INVALIDO EXCEPTION;
 
 BEGIN
     
-    BEGIN -- Validação do parâmetro ID da Materia
+    BEGIN -- Validação do parâmetro ID
 
         IF P_ID IS NULL THEN
             RAISE GRADE_ID_INVALIDO;

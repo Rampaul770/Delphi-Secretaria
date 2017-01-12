@@ -28,8 +28,6 @@ object FrmGradeArea: TFrmGradeArea
     BevelInner = bvRaised
     BevelOuter = bvLowered
     TabOrder = 1
-    ExplicitTop = 71
-    ExplicitHeight = 352
     object DbgGrade: TDBGrid
       Left = 2
       Top = 2
@@ -46,10 +44,12 @@ object FrmGradeArea: TFrmGradeArea
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
       OnCellClick = DbgGradeCellClick
+      OnDrawColumnCell = DbgGradeDrawColumnCell
       OnDblClick = DbgGradeDblClick
       OnKeyDown = DbgGradeKeyDown
       Columns = <
         item
+          Alignment = taCenter
           Expanded = False
           FieldName = 'ID'
           Title.Alignment = taCenter
@@ -66,6 +66,7 @@ object FrmGradeArea: TFrmGradeArea
           Visible = True
         end
         item
+          Alignment = taCenter
           Expanded = False
           FieldName = 'CURSOID'
           Title.Alignment = taCenter
@@ -82,10 +83,11 @@ object FrmGradeArea: TFrmGradeArea
           Visible = True
         end
         item
+          Alignment = taCenter
           Expanded = False
           FieldName = 'MATERIAID'
           Title.Alignment = taCenter
-          Title.Caption = 'C'#243'dgio da Mat'#233'ria'
+          Title.Caption = 'C'#243'digo da Mat'#233'ria'
           Width = 103
           Visible = True
         end
@@ -98,6 +100,7 @@ object FrmGradeArea: TFrmGradeArea
           Visible = True
         end
         item
+          Alignment = taCenter
           Expanded = False
           FieldName = 'ALUNOID'
           Title.Alignment = taCenter
@@ -262,6 +265,13 @@ object FrmGradeArea: TFrmGradeArea
       object Excluir1: TMenuItem
         Caption = '&Excluir'
         OnClick = Excluir1Click
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object Sair2: TMenuItem
+        Caption = 'Sai&r'
+        OnClick = Sair2Click
       end
     end
     object Recarregar1: TMenuItem

@@ -12,6 +12,7 @@ object FrmMateriaCadastro: TFrmMateriaCadastro
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
+  Position = poScreenCenter
   OnActivate = FormActivate
   OnClose = FormClose
   OnKeyDown = FormKeyDown

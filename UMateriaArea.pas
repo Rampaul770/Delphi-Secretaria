@@ -33,6 +33,8 @@ type
     RbtNome: TRadioButton;
     RbtRA: TRadioButton;
     TxtDescricao: TEdit;
+    N1: TMenuItem;
+    Sair2: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure Sair1Click(Sender: TObject);
@@ -48,6 +50,9 @@ type
     procedure BtnFiltrarClick(Sender: TObject);
     procedure DbgMateriaKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure DbgMateriaDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure Sair2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -108,6 +113,30 @@ begin
 
 end;
 
+procedure TFrmMateriaArea.DbgMateriaDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+
+  //Começa Zebrando a linha ímpar
+  with DbgMateria do
+    begin
+      if not (gdSelected in State) then
+        if not odd(DataModuleSecretaria.FDQueryMateria.RecNo) then
+          Canvas.Brush.Color := clWhite
+        else
+          Canvas.Brush.Color:= clMoneyGreen
+      else
+        begin
+          Canvas.Brush.Color:= clSkyBlue;
+          Canvas.Font.Style := [fsBold];
+        end;
+
+       Canvas.FillRect(Rect);
+       DefaultDrawColumnCell(Rect, DataCol, Column, State);
+    end;
+
+end;
+
 procedure TFrmMateriaArea.DbgMateriaKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
@@ -135,6 +164,8 @@ begin
 
         Materia := TMateria.Create(ID);
         Materia.ExcluirMateria();
+
+        Materia.BuscarMaterias;
 
       finally
 
@@ -166,6 +197,13 @@ begin
 
   Close;
   FrmMateriaArea := Nil;
+
+end;
+
+procedure TFrmMateriaArea.Sair2Click(Sender: TObject);
+begin
+
+  Sair1Click(sender);
 
 end;
 
