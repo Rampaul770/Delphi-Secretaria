@@ -20,7 +20,7 @@ Fcep: String;
 Ftelefone: String;
 Fcelular: String;
 Fnascimento: String;
-//Fmatricula: TDateTime;
+Fmatricula: String;
 
 protected
 
@@ -39,7 +39,7 @@ property CEP: String read Fcep write Fcep;
 property Telefone: String read Ftelefone write Ftelefone;
 property Celular: String read Fcelular write Fcelular;
 property Nascimento: String read Fnascimento write Fnascimento;
-//property Matricula: TDateTime read Fmatricula write Fmatricula;
+property Matricula: String read Fmatricula;
 
 
 // declaração do metodo construtor
@@ -50,10 +50,14 @@ Constructor Create(ID: Integer); overload;
 Destructor Destroy; Override;
 
 // metodos da classe
+procedure CarregarAluno(ID: Integer);
+
 function CadastrarAluno(): String;
 function AtualizarAluno(ID: Integer): String;
 function ExcluirAluno(): String;
-function BuscarAlunos(): TDataSource;
+function BuscarAlunos(): TDataSource; overload;
+function BuscarAlunos(Nome: String): TDataSource; overload;
+function BuscarAlunos(RA: Integer): TDataSource; overload;
 
 end;
 
@@ -73,7 +77,7 @@ begin
 
 // metodo contrutor
 
-  self.Fid := ID;
+  CarregarAluno(ID);
 
 end;
 
@@ -99,13 +103,13 @@ begin
 
       with FDStoredProcInsereAluno do
       begin
-        ParamByName('P_NOME').AsString := Fnome;
-        ParamByName('P_RA').AsString := Fra;
-        ParamByName('P_ENDERECO').AsString := Fendereco;
-        ParamByName('P_CEP').AsString := Fcep;
-        ParamByName('P_TELEFONE').AsString := Ftelefone;
-        ParamByName('P_CELULAR').AsString := Fcelular;
-        ParamByName('P_NASCIMENTO').AsString := Fnascimento;
+        ParamByName('P_NOME').Value := Fnome;
+        ParamByName('P_RA').Value := Fra;
+        ParamByName('P_ENDERECO').Value := Fendereco;
+        ParamByName('P_CEP').Value := Fcep;
+        ParamByName('P_TELEFONE').Value := Ftelefone;
+        ParamByName('P_CELULAR').Value := Fcelular;
+        ParamByName('P_NASCIMENTO').Value := Fnascimento;
         ExecProc;
       end;
 
@@ -152,14 +156,14 @@ begin
 
       with FDStoredProcAtualizaAluno do
       begin
-        ParamByName('P_ID').AsBCD := Fid;
-        ParamByName('P_NOME').AsString := Fnome;
-        ParamByName('P_RA').AsString := Fra;
-        ParamByName('P_ENDERECO').AsString := Fendereco;
-        ParamByName('P_CEP').AsString := Fcep;
-        ParamByName('P_TELEFONE').AsString := Ftelefone;
-        ParamByName('P_CELULAR').AsString := Fcelular;
-        ParamByName('P_NASCIMENTO').AsString := Fnascimento;
+        ParamByName('P_ID').Value := Fid;
+        ParamByName('P_NOME').Value := Fnome;
+        ParamByName('P_RA').Value := Fra;
+        ParamByName('P_ENDERECO').Value := Fendereco;
+        ParamByName('P_CEP').Value := Fcep;
+        ParamByName('P_TELEFONE').Value := Ftelefone;
+        ParamByName('P_CELULAR').Value := Fcelular;
+        ParamByName('P_NASCIMENTO').Value := Fnascimento;
         ExecProc;
       end;
 
@@ -210,7 +214,7 @@ begin
 
         with FDStoredProcExcluiAluno do
         begin
-          ParamByName('P_ID').AsBCD := Self.Fid;
+          ParamByName('P_ID').Value := Self.Fid;
           ExecProc;
         end;
 
@@ -235,6 +239,39 @@ begin
 
 end;
 
+procedure TAluno.CarregarAluno(ID: Integer);
+begin
+
+  with UData.DataModuleSecretaria do
+  begin
+    FDConn.Connected := True;
+
+    with FDQueryAluno do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Add('SELECT ID, NOME, RA, ENDERECO, CEP, ' +
+              'TELEFONE, CELULAR, NASCIMENTO, MATRICULA ' +
+              'FROM VW_ALUNO ' +
+              'WHERE ID = ' + IntToStr(ID));
+
+      Open();
+    end;
+
+    self.Fid := ID;
+    self.Fnome := FDQueryAlunoNOME.Value;
+    self.Fra := FDQueryAlunoRA.Value;
+    self.Fendereco := FDQueryAlunoENDERECO.Value;
+    self.Fcep := FDQueryAlunoCEP.Value;
+    self.Ftelefone := FDQueryAlunoTELEFONE.Value;
+    self.Fcelular := FDQueryAlunoCELULAR.Value;
+    self.Fnascimento := FDQueryAlunoNASCIMENTO.Value;
+    self.Fmatricula := FDQueryAlunoMATRICULA.Value;
+
+  end;
+
+end;
+
 function TAluno.BuscarAlunos(): TDataSource;
 begin
 
@@ -248,7 +285,60 @@ begin
         SQL.Clear;
         SQL.Add('SELECT ID, NOME, RA, ENDERECO, CEP, ' +
                 'TELEFONE, CELULAR, NASCIMENTO, MATRICULA ' +
-                'FROM VW_ALUNO');
+                'FROM VW_ALUNO ' +
+                'ORDER BY ID');
+
+        Open();
+      end;
+
+      DtsAluno.DataSet := FDQueryAluno;
+      Result := DtsAluno;
+    end;
+
+end;
+
+function TAluno.BuscarAlunos(Nome: String): TDataSource;
+begin
+
+    with UData.DataModuleSecretaria do
+    begin
+      FDConn.Connected := True;
+
+      with FDQueryAluno do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Add('SELECT ID, NOME, RA, ENDERECO, CEP, ' +
+                'TELEFONE, CELULAR, NASCIMENTO, MATRICULA ' +
+                'FROM VW_ALUNO ' +
+                'WHERE NOME LIKE ' + Chr(39) + '%' + Nome + '%' + Chr(39) + ' ' +
+                'ORDER BY ID');
+
+        Open();
+      end;
+
+      DtsAluno.DataSet := FDQueryAluno;
+      Result := DtsAluno;
+    end;
+
+end;
+
+function TAluno.BuscarAlunos(RA: Integer): TDataSource;
+begin
+
+    with UData.DataModuleSecretaria do
+    begin
+      FDConn.Connected := True;
+
+      with FDQueryAluno do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Add('SELECT ID, NOME, RA, ENDERECO, CEP, ' +
+                'TELEFONE, CELULAR, NASCIMENTO, MATRICULA ' +
+                'FROM VW_ALUNO ' +
+                'WHERE RA = ' + IntToStr(RA) + ' ' +
+                'ORDER BY ID');
 
         Open();
       end;

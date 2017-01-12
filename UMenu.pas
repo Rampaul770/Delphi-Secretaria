@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, UAlunoArea, UMateria, UCurso, UGrade, USobre,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus,
+  UAlunoArea, USobre,
   Vcl.ComCtrls, Vcl.ExtCtrls, UData;
 
 type
@@ -53,10 +54,10 @@ end;
 procedure TFrmMenu.Cursos1Click(Sender: TObject);
 begin
 
-  If not Assigned(FrmCurso) Then
-    FrmCurso := TFrmCurso.Create(Application);
-
-  FrmCurso.ShowModal;
+//  If not Assigned(FrmCurso) Then
+//    FrmCurso := TFrmCurso.Create(Application);
+//
+//  FrmCurso.ShowModal;
 
 end;
 
@@ -73,20 +74,20 @@ end;
 procedure TFrmMenu.Grade1Click(Sender: TObject);
 begin
 
-  If not Assigned(FrmGrade) Then
-    FrmGrade := TFrmGrade.Create(Application);
-
-  FrmGrade.ShowModal;
+//  If not Assigned(FrmGrade) Then
+//    FrmGrade := TFrmGrade.Create(Application);
+//
+//  FrmGrade.ShowModal;
 
 end;
 
 procedure TFrmMenu.Materia1Click(Sender: TObject);
 begin
 
-  If not Assigned(FrmMateria) Then
-    FrmMateria := TFrmMateria.Create(Application);
-
-  FrmMateria.ShowModal;
+//  If not Assigned(FrmMateria) Then
+//    FrmMateria := TFrmMateria.Create(Application);
+//
+//  FrmMateria.ShowModal;
 
 end;
 

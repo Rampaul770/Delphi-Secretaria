@@ -18,18 +18,23 @@ type
   TFrmAlunoArea = class(TForm)
     menu: TMainMenu;
     Arquivo1: TMenuItem;
-    DbgAluno: TDBGrid;
     Cadastrar1: TMenuItem;
-    Pesquisar1: TMenuItem;
-    N1: TMenuItem;
     Sair1: TMenuItem;
     StatusBar1: TStatusBar;
     Atualizar1: TMenuItem;
     Recarregar1: TMenuItem;
     Excluir1: TMenuItem;
+    PnlPesquisa: TPanel;
+    TxtNome: TEdit;
+    MskRA: TMaskEdit;
+    BtnFiltrar: TButton;
+    BtnRecarregar: TButton;
+    Panel1: TPanel;
+    DbgAluno: TDBGrid;
+    RbtNome: TRadioButton;
+    RbtRA: TRadioButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
-    procedure Pesquisar1Click(Sender: TObject);
     procedure Sair1Click(Sender: TObject);
     procedure Cadastrar1Click(Sender: TObject);
     procedure DbgAlunoCellClick(Column: TColumn);
@@ -37,6 +42,12 @@ type
     procedure Atualizar1Click(Sender: TObject);
     procedure Recarregar1Click(Sender: TObject);
     procedure Excluir1Click(Sender: TObject);
+    procedure BtnRecarregarClick(Sender: TObject);
+    procedure RbtNomeClick(Sender: TObject);
+    procedure RbtRAClick(Sender: TObject);
+    procedure BtnFiltrarClick(Sender: TObject);
+    procedure DbgAlunoKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -98,6 +109,15 @@ begin
 
 end;
 
+procedure TFrmAlunoArea.DbgAlunoKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+  if Key = VK_DELETE then
+    Excluir1Click(Sender);
+
+end;
+
 procedure TFrmAlunoArea.Excluir1Click(Sender: TObject);
 var
   Aluno: TAluno;
@@ -139,21 +159,33 @@ begin
 
 end;
 
-procedure TFrmAlunoArea.Pesquisar1Click(Sender: TObject);
-begin
-
- If not Assigned(FrmAlunoPesquisa) Then
-    FrmAlunoPesquisa := TFrmAlunoPesquisa.Create(Application);
-
-  FrmAlunoPesquisa.ShowModal;
-
-end;
-
 procedure TFrmAlunoArea.Sair1Click(Sender: TObject);
 begin
 
   Close;
   FrmAlunoArea := Nil;
+
+end;
+
+procedure TFrmAlunoArea.RbtNomeClick(Sender: TObject);
+begin
+
+  TxtNome.Enabled := True;
+  MskRA.Enabled := False;
+  MskRA.Clear;
+
+  TxtNome.SetFocus;
+
+end;
+
+procedure TFrmAlunoArea.RbtRAClick(Sender: TObject);
+begin
+
+  TxtNome.Enabled := False;
+  TxtNome.Clear;
+  MskRA.Enabled := True;
+
+  MskRA.SetFocus;
 
 end;
 
@@ -185,5 +217,40 @@ begin
 
 end;
 
+
+procedure TFrmAlunoArea.BtnFiltrarClick(Sender: TObject);
+var
+  Aluno: TAluno;
+begin
+
+  try
+
+    Aluno := TAluno.Create;
+
+    if RbtNome.Checked then
+      Aluno.BuscarAlunos(TxtNome.Text)
+    else
+      Aluno.BuscarAlunos(StrToInt(MskRA.EditText));
+
+  finally
+
+    FreeAndNil(Aluno);
+
+  end;
+
+end;
+
+procedure TFrmAlunoArea.BtnRecarregarClick(Sender: TObject);
+begin
+
+  TxtNome.Clear;
+  MskRA.Clear;
+
+  AtualizarGrid;
+
+  RbtNome.Checked := True;
+  TxtNome.SetFocus;
+
+end;
 
 end.

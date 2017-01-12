@@ -10,10 +10,11 @@ type
     Panel1: TPanel;
     ProgramIcon: TImage;
     ProductName: TLabel;
-    Version: TLabel;
     Copyright: TLabel;
     Comments: TLabel;
     OKButton: TButton;
+    Label1: TLabel;
+    Label2: TLabel;
   private
     { Private declarations }
   public

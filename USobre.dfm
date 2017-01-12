@@ -3,8 +3,8 @@ object FrmSobre: TFrmSobre
   Top = 108
   BorderStyle = bsDialog
   Caption = 'Sobre'
-  ClientHeight = 213
-  ClientWidth = 298
+  ClientHeight = 187
+  ClientWidth = 313
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,15 +18,15 @@ object FrmSobre: TFrmSobre
   object Panel1: TPanel
     Left = 8
     Top = 8
-    Width = 281
-    Height = 161
+    Width = 297
+    Height = 137
     BevelInner = bvRaised
     BevelOuter = bvLowered
     ParentColor = True
     TabOrder = 0
     object ProgramIcon: TImage
       Left = 8
-      Top = 8
+      Top = 17
       Width = 65
       Height = 57
       Picture.Data = {
@@ -57,40 +57,80 @@ object FrmSobre: TFrmSobre
     object ProductName: TLabel
       Left = 88
       Top = 17
-      Width = 150
+      Width = 201
       Height = 13
-      Caption = 'Teste para Estamparia SALETE'
-      IsControl = True
-    end
-    object Version: TLabel
-      Left = 88
-      Top = 40
-      Width = 15
-      Height = 13
-      Caption = '1.0'
+      Caption = 'Teste para Estamparia SALETE 1.0'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
       IsControl = True
     end
     object Copyright: TLabel
       Left = 8
-      Top = 80
-      Width = 178
+      Top = 87
+      Width = 209
       Height = 13
       Caption = 'Copyright: ANDRE TOLEDO BIANCO'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
       IsControl = True
     end
     object Comments: TLabel
       Left = 8
-      Top = 104
-      Width = 178
+      Top = 106
+      Width = 225
       Height = 26
       Caption = 'E-mail: abianco.allegro@gmail.com'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      WordWrap = True
+      IsControl = True
+    end
+    object Label1: TLabel
+      Left = 88
+      Top = 36
+      Width = 121
+      Height = 39
+      Caption = 'DELPHI 10.1 Berlin'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      WordWrap = True
+      IsControl = True
+    end
+    object Label2: TLabel
+      Left = 88
+      Top = 54
+      Width = 113
+      Height = 26
+      Caption = 'ORACLE 11g'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
       WordWrap = True
       IsControl = True
     end
   end
   object OKButton: TButton
     Left = 111
-    Top = 180
+    Top = 153
     Width = 75
     Height = 25
     Caption = 'OK'
