@@ -113,6 +113,7 @@ begin
         ExecProc;
       end;
 
+      FDConn.Connected := False;
     end;
 
   except
@@ -167,6 +168,7 @@ begin
         ExecProc;
       end;
 
+      FDConn.Connected := False;
     end;
 
   except
@@ -218,6 +220,7 @@ begin
           ExecProc;
         end;
 
+        FDConn.Connected := False;
       end;
 
     except

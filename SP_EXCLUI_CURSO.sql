@@ -17,7 +17,7 @@ BEGIN
     EXCEPTION    
     
         WHEN ID_INVALIDO THEN
-            RAISE_APPLICATION_ERROR(-20001, 'CODIGO ID INVÁLIDO! - ');
+            RAISE_APPLICATION_ERROR(-20001, 'CODIGO ID INVÁLIDO!');
     END;
     
     BEGIN    
@@ -30,7 +30,10 @@ BEGIN
     EXCEPTION
     
         WHEN OTHERS THEN
-            RAISE_APPLICATION_ERROR(-20002, 'ERRO INESPERADO - ' || SQLERRM);
+            BEGIN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20002, 'ERRO INESPERADO - ' || SQLERRM);
+            END;
     
     END;
 

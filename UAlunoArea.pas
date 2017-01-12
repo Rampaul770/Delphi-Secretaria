@@ -11,7 +11,7 @@ uses
   FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.Client, FireDAC.Comp.DataSet,
   FireDAC.Comp.UI, FireDAC.Phys.Oracle,
-  UData, UAluno, UAlunoCadastro, UAlunoPesquisa, UFuncUtils,
+  UData, UAluno, UAlunoCadastro, UFuncUtils,
   Vcl.ComCtrls;
 
 type
@@ -34,7 +34,6 @@ type
     RbtNome: TRadioButton;
     RbtRA: TRadioButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure FormActivate(Sender: TObject);
     procedure Sair1Click(Sender: TObject);
     procedure Cadastrar1Click(Sender: TObject);
     procedure DbgAlunoCellClick(Column: TColumn);
@@ -48,6 +47,7 @@ type
     procedure BtnFiltrarClick(Sender: TObject);
     procedure DbgAlunoKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -64,6 +64,9 @@ implementation
 
 procedure TFrmAlunoArea.Atualizar1Click(Sender: TObject);
 begin
+
+  if DbgAluno.Fields[0].Text = '' then
+    Exit;
 
   If not Assigned(FrmAlunoCadastro) Then
     FrmAlunoCadastro := TFrmAlunoCadastro.Create(Application);
@@ -123,6 +126,9 @@ var
   Aluno: TAluno;
   ID: Integer;
 begin
+
+  if DbgAluno.Fields[0].Text = '' then
+    Exit;
 
   ID := StrToInt(DbgAluno.Fields[0].Text);
 

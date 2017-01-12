@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus,
-  UAlunoArea, USobre,
+  UAlunoArea, UMateriaArea, UCursoArea, USobre,
   Vcl.ComCtrls, Vcl.ExtCtrls, UData;
 
 type
@@ -54,10 +54,10 @@ end;
 procedure TFrmMenu.Cursos1Click(Sender: TObject);
 begin
 
-//  If not Assigned(FrmCurso) Then
-//    FrmCurso := TFrmCurso.Create(Application);
-//
-//  FrmCurso.ShowModal;
+  If not Assigned(FrmCursoArea) Then
+    FrmCursoArea := TFrmCursoArea.Create(Application);
+
+  FrmCursoArea.ShowModal;
 
 end;
 
@@ -84,10 +84,10 @@ end;
 procedure TFrmMenu.Materia1Click(Sender: TObject);
 begin
 
-//  If not Assigned(FrmMateria) Then
-//    FrmMateria := TFrmMateria.Create(Application);
-//
-//  FrmMateria.ShowModal;
+  If not Assigned(FrmMateriaArea) Then
+    FrmMateriaArea := TFrmMateriaArea.Create(Application);
+
+  FrmMateriaArea.ShowModal;
 
 end;
 

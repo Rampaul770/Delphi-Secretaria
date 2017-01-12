@@ -17,10 +17,13 @@ BEGIN
     EXCEPTION    
     
         WHEN ID_INVALIDO THEN
-            RAISE_APPLICATION_ERROR(-20001, 'CODIGO ID INVÁLIDO! - ');
+            RAISE_APPLICATION_ERROR(-20001, 'CODIGO ID INVÁLIDO!');
     END;
         
     BEGIN
+    
+        DELETE FROM CURSO_MATERIA
+        WHERE MATERIA_ID = P_ID;
     
         DELETE FROM MATERIA
         WHERE ID = P_ID;
@@ -30,7 +33,10 @@ BEGIN
     EXCEPTION
     
         WHEN OTHERS THEN
-            RAISE_APPLICATION_ERROR(-20002, 'ERRO INESPERADO - ' || SQLERRM);
+            BEGIN
+                ROLLBACK;        
+                RAISE_APPLICATION_ERROR(-20002, 'ERRO INESPERADO - ' || SQLERRM);
+            END;
     
     END;
 

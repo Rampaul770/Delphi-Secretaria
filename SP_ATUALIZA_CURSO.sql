@@ -21,7 +21,7 @@ BEGIN
     EXCEPTION    
     
         WHEN ID_INVALIDO THEN
-            RAISE_APPLICATION_ERROR(-20001, 'CODIGO ID INVÁLIDO! - ');
+            RAISE_APPLICATION_ERROR(-20001, 'CODIGO ID INVÁLIDO!');
     END;
 
     BEGIN -- Validação do parâmetro Nome
@@ -33,7 +33,7 @@ BEGIN
     EXCEPTION
     
         WHEN NOME_INVALIDO THEN
-            RAISE_APPLICATION_ERROR(-20002, 'NOME INVÁLIDO! - ');
+            RAISE_APPLICATION_ERROR(-20002, 'NOME INVÁLIDO!');
 
     END;
 
@@ -46,7 +46,7 @@ BEGIN
     EXCEPTION
     
         WHEN DESCRICAO_INVALIDA THEN
-            RAISE_APPLICATION_ERROR(-20003, 'DESCRIÇÃO INVÁLIDA! - ');
+            RAISE_APPLICATION_ERROR(-20003, 'DESCRIÇÃO INVÁLIDA!');
 
     END;
     
@@ -61,7 +61,10 @@ BEGIN
     EXCEPTION
     
         WHEN OTHERS THEN
-            RAISE_APPLICATION_ERROR(-20004, 'ERRO INESPERADO - ' || SQLERRM);
+            BEGIN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20004, 'ERRO INESPERADO - ' || SQLERRM);
+            END;
     
     END;
 

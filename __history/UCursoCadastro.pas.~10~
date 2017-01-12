@@ -1,0 +1,207 @@
+unit UCursoCadastro;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Mask, Vcl.StdCtrls, Vcl.ExtCtrls,
+  UData, UCurso;
+
+type
+  TFrmCursoCadastro = class(TForm)
+    PnlCadastro: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    LblNomeRequerido: TLabel;
+    LblDescricaoRequerido: TLabel;
+    LblMensagemRequerido: TLabel;
+    TxtNome: TEdit;
+    BtnCancelar: TButton;
+    TxtDescricao: TEdit;
+    BtnGravar: TButton;
+    procedure BtnCancelarClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure BtnGravarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+  private
+    { Private declarations }
+    function CampoObrigatorioValido(): Boolean;
+    procedure CadastrarCurso;
+    procedure AtualizarCurso(ID: Integer);
+  public
+    { Public declarations }
+    Acao: String;
+    ID: Integer;
+  end;
+
+var
+  FrmCursoCadastro: TFrmCursoCadastro;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFrmCursoCadastro.BtnCancelarClick(Sender: TObject);
+begin
+
+  Close;
+  FrmCursoCadastro := Nil;
+
+end;
+
+procedure TFrmCursoCadastro.BtnGravarClick(Sender: TObject);
+begin
+
+  if CampoObrigatorioValido then
+    if Acao = 'INSERT' then
+      begin
+        CadastrarCurso;
+        Close;
+      end
+    else
+      begin
+        AtualizarCurso(ID);
+        Close;
+      end;
+
+end;
+
+procedure TFrmCursoCadastro.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+
+  Action := caFree;
+  FrmCursoCadastro := Nil;
+
+end;
+
+procedure TFrmCursoCadastro.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+  if Key = VK_ESCAPE then
+    BtnCancelarClick(Sender);
+
+end;
+
+function TFrmCursoCadastro.CampoObrigatorioValido(): Boolean;
+var
+  MostraMensagem: Boolean;
+  Foco: Integer;
+begin
+
+  MostraMensagem := False;
+  Foco := 0;
+
+  if TxtNome.Text = '' then
+    begin
+      LblNomeRequerido.Visible := True;
+      MostraMensagem := True;
+      If Foco = 0 Then Foco := 1;
+    end
+  else
+    LblNomeRequerido.Visible := False;
+
+  if TxtDescricao.Text = '' then
+    begin
+      LblDescricaoRequerido.Visible := True;
+      MostraMensagem := True;
+      If Foco = 0 Then Foco := 2;
+    end
+  else
+    LblDescricaoRequerido.Visible := False;
+
+
+  if Foco = 1 then
+    TxtNome.SetFocus
+  else if Foco = 2 then
+    TxtDescricao.SetFocus;
+
+
+  if MostraMensagem then
+    begin
+      LblMensagemRequerido.Visible := True;
+      Result := False;
+    end
+  else
+    begin
+      LblMensagemRequerido.Visible := False;
+      Result := True;
+    end
+
+end;
+
+procedure TFrmCursoCadastro.FormShow(Sender: TObject);
+begin
+
+  if Acao = 'INSERT' then
+    FrmCursoCadastro.Caption := 'Cadastrar Aluno'
+  else
+    FrmCursoCadastro.Caption := 'Atualizar cadastro';
+
+end;
+
+procedure TFrmCursoCadastro.CadastrarCurso;
+var
+  Curso: TCurso;
+  Retorno: String;
+begin
+
+  try
+
+    Curso := TCurso.Create;
+
+    with Curso do
+    begin
+      Nome := TxtNome.Text;
+      Descricao := TxtDescricao.Text;
+    end;
+
+    Retorno := Curso.CadastrarCurso;
+
+    if Retorno = '' then
+      MessageBox(FrmCursoCadastro.Handle, 'Curso cadastrado com sucesso!', 'Aviso', MB_OK or MB_ICONINFORMATION)
+    else
+      MessageBox(FrmCursoCadastro.Handle, PChar('Falha ao cadastrar o curso!' + Char(13)  + Char(13) + 'Erro: ' + Retorno), 'Erro', MB_OK or MB_ICONSTOP);
+
+  finally
+
+    FreeAndNil(Curso);
+
+  end;
+
+end;
+
+procedure TFrmCursoCadastro.AtualizarCurso(ID: Integer);
+var
+  Curso: TCurso;
+  Retorno: String;
+begin
+
+  try
+
+    Curso := TMateria.Create(ID);
+
+    with Materia do
+    begin
+      Nome := TxtNome.Text;
+      Descricao := TxtDescricao.Text;
+    end;
+
+    Retorno := Materia.AtualizarMateria(ID);
+
+    if Retorno = '' then
+      MessageBox(FrmCursoCadastro.Handle, 'Matéria atualizada com sucesso!', 'Aviso', MB_OK or MB_ICONINFORMATION)
+    else
+      MessageBox(FrmCursoCadastro.Handle, PChar('Falha ao atualizar o cadastro da matéria!' + Char(13)  + Char(13) + 'Erro: ' + Retorno), 'Erro', MB_OK or MB_ICONSTOP);
+
+  finally
+
+    FreeAndNil(Materia);
+
+  end;
+
+end;
+
+end.

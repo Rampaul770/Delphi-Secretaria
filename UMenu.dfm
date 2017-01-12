@@ -29,23 +29,23 @@ object FrmMenu: TFrmMenu
     Top = 112
     object Cadastro1: TMenuItem
       Caption = '&Cadastro'
-      object Aluno1: TMenuItem
-        Caption = '&Alunos'
-        OnClick = Aluno1Click
-      end
-      object Materia1: TMenuItem
-        Caption = '&Materias'
-        OnClick = Materia1Click
-      end
       object Cursos1: TMenuItem
         Caption = 'Curso&s'
         OnClick = Cursos1Click
+      end
+      object Materia1: TMenuItem
+        Caption = '&Mat'#233'rias'
+        OnClick = Materia1Click
+      end
+      object Aluno1: TMenuItem
+        Caption = '&Alunos'
+        OnClick = Aluno1Click
       end
       object N1: TMenuItem
         Caption = '-'
       end
       object Grade1: TMenuItem
-        Caption = '&Grade de Cursos'
+        Caption = '&Grade Escolar'
         OnClick = Grade1Click
       end
     end

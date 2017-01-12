@@ -1,0 +1,184 @@
+object FrmCursoArea: TFrmCursoArea
+  Left = 0
+  Top = 0
+  ActiveControl = TxtNome
+  Caption = 'Cadastro de Cursos'
+  ClientHeight = 442
+  ClientWidth = 716
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  Menu = menu
+  OldCreateOrder = False
+  Position = poDesigned
+  WindowState = wsMaximized
+  OnActivate = FormActivate
+  OnClose = FormClose
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Panel1: TPanel
+    Left = 0
+    Top = 71
+    Width = 716
+    Height = 352
+    Align = alClient
+    BevelInner = bvRaised
+    BevelOuter = bvLowered
+    TabOrder = 1
+    object DbgCurso: TDBGrid
+      Left = 2
+      Top = 2
+      Width = 712
+      Height = 348
+      Align = alClient
+      DataSource = DataModuleSecretaria.DtsMateria
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+      ReadOnly = True
+      TabOrder = 0
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = []
+      OnCellClick = DbgCursoCellClick
+      OnDblClick = DbgCursoDblClick
+      OnKeyDown = DbgCursoKeyDown
+      Columns = <
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'ID'
+          Title.Alignment = taCenter
+          Title.Caption = 'Registro'
+          Width = 47
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'NOME'
+          Title.Alignment = taCenter
+          Title.Caption = 'Nome'
+          Width = 293
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'DESCRICAO'
+          Title.Alignment = taCenter
+          Title.Caption = 'Descri'#231#227'o'
+          Visible = True
+        end>
+    end
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 423
+    Width = 716
+    Height = 19
+    Panels = <
+      item
+        Width = 50
+      end>
+  end
+  object PnlPesquisa: TPanel
+    Left = 0
+    Top = 0
+    Width = 716
+    Height = 71
+    Align = alTop
+    BevelInner = bvRaised
+    BevelOuter = bvLowered
+    TabOrder = 0
+    object TxtNome: TEdit
+      Left = 87
+      Top = 11
+      Width = 345
+      Height = 21
+      CharCase = ecUpperCase
+      MaxLength = 100
+      TabOrder = 2
+    end
+    object BtnFiltrar: TButton
+      Left = 447
+      Top = 21
+      Width = 75
+      Height = 25
+      Caption = '&Filtrar'
+      TabOrder = 3
+      OnClick = BtnFiltrarClick
+    end
+    object BtnRecarregar: TButton
+      Left = 535
+      Top = 21
+      Width = 75
+      Height = 25
+      Caption = '&Recarregar'
+      TabOrder = 4
+      OnClick = BtnRecarregarClick
+    end
+    object RbtNome: TRadioButton
+      Left = 11
+      Top = 13
+      Width = 49
+      Height = 17
+      Caption = 'Nome:'
+      Checked = True
+      DoubleBuffered = False
+      ParentDoubleBuffered = False
+      TabOrder = 0
+      TabStop = True
+      OnClick = RbtNomeClick
+    end
+    object RbtRA: TRadioButton
+      Left = 11
+      Top = 40
+      Width = 73
+      Height = 17
+      Caption = 'Descricao:'
+      DoubleBuffered = False
+      ParentDoubleBuffered = False
+      TabOrder = 1
+      OnClick = RbtRAClick
+    end
+    object TxtDescricao: TEdit
+      Left = 87
+      Top = 38
+      Width = 345
+      Height = 21
+      CharCase = ecUpperCase
+      MaxLength = 100
+      TabOrder = 5
+    end
+  end
+  object menu: TMainMenu
+    Left = 672
+    Top = 392
+    object Arquivo1: TMenuItem
+      Caption = '&Arquivo'
+      object Cadastrar1: TMenuItem
+        Caption = '&Cadastrar'
+        OnClick = Cadastrar1Click
+      end
+      object Atualizar1: TMenuItem
+        Caption = 'A&tualizar'
+        OnClick = Atualizar1Click
+      end
+      object Excluir1: TMenuItem
+        Caption = '&Excluir'
+        OnClick = Excluir1Click
+      end
+    end
+    object Recarregar1: TMenuItem
+      Caption = '&Recarregar'
+      ShortCut = 116
+      OnClick = Recarregar1Click
+    end
+    object Sair1: TMenuItem
+      Caption = 'Sai&r'
+      OnClick = Sair1Click
+    end
+  end
+end

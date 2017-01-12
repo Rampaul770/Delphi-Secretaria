@@ -6,6 +6,7 @@ Coordinates=99,275,62,36
 
 [FDQueryAluno]
 Coordinates=10,10,99,256
+Visible=True
 
 [FDGUIxWaitCursor1]
 Coordinates=226,133,132,36
@@ -20,33 +21,6 @@ Coordinates=304,10,165,58
 Coordinates=119,10,175,58
 Visible=True
 
-[FDQueryAlunoCELULAR]
-Coordinates=439,1,158,36
-
-[FDQueryAlunoMATRICULA]
-Coordinates=439,56,173,36
-
-[FDQueryAlunoTELEFONE]
-Coordinates=439,111,167,36
-
-[FDQueryAlunoRA]
-Coordinates=429,166,117,36
-
-[FDQueryAlunoCEP]
-Coordinates=439,221,125,36
-
-[FDQueryAlunoNOME]
-Coordinates=439,276,137,36
-
-[FDQueryAlunoID]
-Coordinates=429,331,112,36
-
-[FDQueryAlunoENDERECO]
-Coordinates=250,349,171,36
-
-[FDQueryAlunoNASCIMENTO]
-Coordinates=61,349,184,36
-
 []
-Coordinates=245,265,91,36
+Coordinates=429,331,112,36
 

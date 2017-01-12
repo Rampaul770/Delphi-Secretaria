@@ -8,32 +8,30 @@
 <existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
 <parsed>true</parsed>
 <columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
-<Column name="CURSO_ID" id="983A6373-6D9D-85C5-B5A4-5C240AFF83E7">
+<Column name="ID" id="4347AB0B-1E91-3BCA-4E06-AD336B6F626B">
 <createdBy>andre</createdBy>
-<createdTime>2017-01-03 19:43:02 UTC</createdTime>
+<createdTime>2017-01-06 22:19:35 UTC</createdTime>
 <ownerDesignName>MER_ESCOLA</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-<previousColumn>false</previousColumn>
+<dataTypePrecision>5</dataTypePrecision>
+<ownDataTypeParameters>,5,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
-<associations>
-<colAssociation fkAssociation="E3AECFE0-6691-DBBA-F841-F9D845796EDE" referredColumn="ED368054-BDFE-25AE-092B-8BFF545A3821"/>
-</associations>
 </Column>
-<Column name="MATERIA_ID" id="C317F82B-F9E2-89E5-7CB9-9A62FADD38D7">
+<Column name="CURSO_MATERIA_ID" id="6287A7C0-C9A5-60D3-D889-ABAD565438E9">
 <createdBy>andre</createdBy>
-<createdTime>2017-01-03 19:43:17 UTC</createdTime>
+<createdTime>2017-01-06 22:19:02 UTC</createdTime>
 <ownerDesignName>MER_ESCOLA</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>5</dataTypePrecision>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
-<colAssociation fkAssociation="0B2AABF2-AF0C-158A-BE94-4D0EA8CD1FB4" referredColumn="BC78768A-44AC-4388-7F51-49DBDA841B57"/>
+<colAssociation fkAssociation="3187DA33-606C-496D-73C4-ACEFAA65C8E9" referredColumn="FF9F4D3C-7C34-C3AF-F7F6-8235C389380A"/>
 </associations>
 </Column>
 <Column name="ALUNO_ID" id="B8DF5EF0-8FAA-D5CD-C230-1703CA5AE023">
@@ -43,6 +41,7 @@
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>5</dataTypePrecision>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
@@ -60,29 +59,18 @@
 <indexState>Primary Constraint</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="983A6373-6D9D-85C5-B5A4-5C240AFF83E7"/>
-<colUsage columnID="C317F82B-F9E2-89E5-7CB9-9A62FADD38D7"/>
+<colUsage columnID="4347AB0B-1E91-3BCA-4E06-AD336B6F626B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="30FA9F17-89D8-860F-B25B-887CC72FE042" name="GRADE__UN">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-06 22:19:53 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
 <colUsage columnID="B8DF5EF0-8FAA-D5CD-C230-1703CA5AE023"/>
-</indexColumnUsage>
-</ind_PK_UK>
-<ind_PK_UK id="DF66F853-D243-D995-487E-A57F5BFEEDF2" name="GRADE_CURSO_FK">
-<createdBy>andre</createdBy>
-<createdTime>2017-01-03 19:43:02 UTC</createdTime>
-<ownerDesignName>MER_ESCOLA</ownerDesignName>
-<indexState>Foreign Key</indexState>
-<isSurrogateKey>false</isSurrogateKey>
-<indexColumnUsage>
-<colUsage columnID="983A6373-6D9D-85C5-B5A4-5C240AFF83E7"/>
-</indexColumnUsage>
-</ind_PK_UK>
-<ind_PK_UK id="223F8F72-86D7-0F16-A08B-AC280B546FF2" name="GRADE_MATERIA_FK">
-<createdBy>andre</createdBy>
-<createdTime>2017-01-03 19:43:17 UTC</createdTime>
-<ownerDesignName>MER_ESCOLA</ownerDesignName>
-<indexState>Foreign Key</indexState>
-<isSurrogateKey>false</isSurrogateKey>
-<indexColumnUsage>
-<colUsage columnID="C317F82B-F9E2-89E5-7CB9-9A62FADD38D7"/>
+<colUsage columnID="6287A7C0-C9A5-60D3-D889-ABAD565438E9"/>
 </indexColumnUsage>
 </ind_PK_UK>
 <ind_PK_UK id="0F2F3B9E-DB0B-7899-C43E-21DCB35E87CA" name="GRADE_ALUNO_FK">
@@ -93,6 +81,16 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="B8DF5EF0-8FAA-D5CD-C230-1703CA5AE023"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="02506502-2292-CF90-8F06-EAB6E9506EF7" name="GRADE_CURSO_MATERIA_FK">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-06 22:19:02 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6287A7C0-C9A5-60D3-D889-ABAD565438E9"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>
