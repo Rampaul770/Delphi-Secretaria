@@ -49,15 +49,15 @@ object FrmMateriaArea: TFrmMateriaArea
       Columns = <
         item
           Expanded = False
-          FieldName = 'MATERIA_ID'
+          FieldName = 'MATERIAID'
           Title.Alignment = taCenter
-          Title.Caption = 'Registro'
+          Title.Caption = 'C'#243'digo'
           Width = 59
           Visible = True
         end
         item
           Expanded = False
-          FieldName = 'NOME_MATERIA'
+          FieldName = 'MATERIANOME'
           Title.Alignment = taCenter
           Title.Caption = 'Mat'#233'ria'
           Width = 330
@@ -65,7 +65,7 @@ object FrmMateriaArea: TFrmMateriaArea
         end
         item
           Expanded = False
-          FieldName = 'DESCRICAO_MATERIA'
+          FieldName = 'MATERIADESCRICAO'
           Title.Alignment = taCenter
           Title.Caption = 'Descri'#231#227'o'
           Width = 368
@@ -73,7 +73,7 @@ object FrmMateriaArea: TFrmMateriaArea
         end
         item
           Expanded = False
-          FieldName = 'NOME_CURSO'
+          FieldName = 'CURSONOME'
           Title.Alignment = taCenter
           Title.Caption = 'Curso'
           Width = 370
@@ -81,7 +81,7 @@ object FrmMateriaArea: TFrmMateriaArea
         end
         item
           Expanded = False
-          FieldName = 'CURSO_ID'
+          FieldName = 'CURSOID'
           Visible = False
         end>
     end

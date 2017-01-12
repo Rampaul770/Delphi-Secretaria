@@ -112,8 +112,7 @@ begin
         20001 : retorno := '20001 - NOME INVÁLIDO!';
         20002 : retorno := '20002 - DESCRIÇÃO INVÁLIDA!';
         20003 : retorno := '20003 - CÓDIGO ID DO CURSO INVÁLIDO!';
-        20004 : retorno := '20004 - CÓDIGO ID DO CURSO INVÁLIDO!';
-    		20005 : retorno := '20005 - ERRO INESPERADO!';
+    		20004 : retorno := '20004 - ERRO INESPERADO!';
       End;
 
   end;
@@ -152,12 +151,11 @@ begin
       //retorno := IntToStr(Ex.Errors[0].ErrorCode);
 
       Case Ex.Errors[0].ErrorCode of
-        20001 : retorno := '20001 - CODIGO ID INVÁLIDO!';
+        20001 : retorno := '20001 - CÓDIGO ID INVÁLIDO!';
         20002 : retorno := '20002 - NOME INVÁLIDO!';
         20003 : retorno := '20003 - DESCRIÇÃO INVÁLIDA!';
-        20004 : retorno := '20004 - CODIGO ID DO CURSO INVÁLIDO!';
-        20005 : retorno := '20005 - CODIGO ID DO CURSO INVÁLIDO!';
-        20006 : retorno := '20006 - ERRO INESPERADO!';
+        20004 : retorno := '20004 - CÓDIGO ID DO CURSO INVÁLIDO!';
+        20005 : retorno := '20005 - ERRO INESPERADO!';
       End;
 
   end;
@@ -196,7 +194,7 @@ begin
         //retorno := IntToStr(Ex.Errors[0].ErrorCode);
 
         Case Ex.Errors[0].ErrorCode of
-          20001 : retorno := '20001 - CODIGO ID INVÁLIDO!';
+          20001 : retorno := '20001 - CÓDIGO ID INVÁLIDO!';
           20002 : retorno := '20002 - ERRO INESPERADO!';
         End;
 
@@ -219,17 +217,17 @@ begin
     begin
       Close;
       SQL.Clear;
-      SQL.Add('SELECT CURSO_ID, NOME_CURSO, MATERIA_ID, NOME_MATERIA, DESCRICAO_MATERIA ' +
-              'FROM VW_CURSO_MATERIA ' +
-              'WHERE MATERIA_ID = ' + IntToStr(ID));
+      SQL.Add('SELECT CURSOID, CURSONOME, MATERIAID, MATERIANOME, MATERIADESCRICAO ' +
+              'FROM VW_MATERIA_CURSO ' +
+              'WHERE MATERIAID = ' + IntToStr(ID));
 
       Open();
     end;
 
     self.Fid := ID;
-    self.Fnome := FDQueryMateriaNOME_MATERIA.Value;
-    self.Fdescricao := FDQueryMateriaDESCRICAO_MATERIA.Value;
-    self.Fcursoid := FDQueryMateriaCURSO_ID.AsInteger;
+    self.Fnome := FDQueryMateriaMATERIANOME.Value;
+    self.Fdescricao := FDQueryMateriaMATERIADESCRICAO.Value;
+    self.Fcursoid := FDQueryMateriaCURSOID.AsInteger;
 
   end;
 
@@ -246,9 +244,9 @@ begin
       begin
         Close;
         SQL.Clear;
-        SQL.Add('SELECT CURSO_ID, NOME_CURSO, MATERIA_ID, NOME_MATERIA, DESCRICAO_MATERIA ' +
-                'FROM VW_CURSO_MATERIA ' +
-                'ORDER BY MATERIA_ID');
+        SQL.Add('SELECT CURSOID, CURSONOME, MATERIAID, MATERIANOME, MATERIADESCRICAO ' +
+                'FROM VW_MATERIA_CURSO ' +
+                'ORDER BY MATERIAID');
 
         Open();
       end;
@@ -270,10 +268,10 @@ begin
       begin
         Close;
         SQL.Clear;
-        SQL.Add('SELECT CURSO_ID, NOME_CURSO, MATERIA_ID, NOME_MATERIA, DESCRICAO_MATERIA ' +
-                'FROM VW_CURSO_MATERIA ' +
-                'WHERE NOME_MATERIA LIKE ' + Chr(39) + '%' + Nome + '%' + Chr(39) + ' ' +
-                'ORDER BY MATERIA_ID');
+        SQL.Add('SELECT CURSOID, CURSONOME, MATERIAID, MATERIANOME, MATERIADESCRICAO ' +
+                'FROM VW_MATERIA_CURSO ' +
+                'WHERE MATERIANOME LIKE ' + Chr(39) + '%' + Nome + '%' + Chr(39) + ' ' +
+                'ORDER BY MATERIAID');
 
         Open();
       end;
@@ -295,10 +293,10 @@ begin
       begin
         Close;
         SQL.Clear;
-        SQL.Add('SELECT CURSO_ID, NOME_CURSO, MATERIA_ID, NOME_MATERIA, DESCRICAO_MATERIA ' +
-                'FROM VW_CURSO_MATERIA ' +
-                'WHERE DESCRICAO_MATERIA LIKE ' + Chr(39) + '%' + Descricao + '%' + Chr(39) + ' ' +
-                'ORDER BY MATERIA_ID');
+        SQL.Add('SELECT CURSOID, CURSONOME, MATERIAID, MATERIANOME, MATERIADESCRICAO ' +
+                'FROM VW_MATERIA_CURSO ' +
+                'WHERE MATERIADESCRICAO LIKE ' + Chr(39) + '%' + Descricao + '%' + Chr(39) + ' ' +
+                'ORDER BY MATERIAID');
 
         Open();
       end;

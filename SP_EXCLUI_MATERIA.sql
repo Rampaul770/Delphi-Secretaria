@@ -22,7 +22,7 @@ BEGIN
         
     BEGIN
     
-        DELETE FROM CURSO_MATERIA
+        DELETE FROM MATERIA_CURSO
         WHERE MATERIA_ID = P_ID;
     
         DELETE FROM MATERIA

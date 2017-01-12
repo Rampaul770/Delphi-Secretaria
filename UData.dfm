@@ -1,7 +1,7 @@
 object DataModuleSecretaria: TDataModuleSecretaria
   OldCreateOrder = False
   Height = 429
-  Width = 737
+  Width = 712
   object FDConn: TFDConnection
     Params.Strings = (
       'Database=localhost:1521/xe'
@@ -240,40 +240,40 @@ object DataModuleSecretaria: TDataModuleSecretaria
     Connection = FDConn
     SQL.Strings = (
       
-        'SELECT CURSO_ID, NOME_CURSO, MATERIA_ID, NOME_MATERIA, DESCRICAO' +
-        '_MATERIA '
-      'FROM VW_CURSO_MATERIA    ')
+        'SELECT CURSOID, CURSONOME, MATERIAID, MATERIANOME, MATERIADESCRI' +
+        'CAO'
+      'FROM VW_MATERIA_CURSO')
     Left = 232
     Top = 80
-    object FDQueryMateriaCURSO_ID: TBCDField
-      FieldName = 'CURSO_ID'
-      Origin = 'CURSO_ID'
+    object FDQueryMateriaCURSOID: TBCDField
+      FieldName = 'CURSOID'
+      Origin = 'CURSOID'
       Required = True
       Precision = 5
       Size = 0
     end
-    object FDQueryMateriaNOME_CURSO: TWideStringField
-      FieldName = 'NOME_CURSO'
-      Origin = 'NOME_CURSO'
+    object FDQueryMateriaCURSONOME: TWideStringField
+      FieldName = 'CURSONOME'
+      Origin = 'CURSONOME'
       Required = True
       Size = 100
     end
-    object FDQueryMateriaMATERIA_ID: TBCDField
-      FieldName = 'MATERIA_ID'
-      Origin = 'MATERIA_ID'
+    object FDQueryMateriaMATERIAID: TBCDField
+      FieldName = 'MATERIAID'
+      Origin = 'MATERIAID'
       Required = True
       Precision = 5
       Size = 0
     end
-    object FDQueryMateriaNOME_MATERIA: TWideStringField
-      FieldName = 'NOME_MATERIA'
-      Origin = 'NOME_MATERIA'
+    object FDQueryMateriaMATERIANOME: TWideStringField
+      FieldName = 'MATERIANOME'
+      Origin = 'MATERIANOME'
       Required = True
       Size = 100
     end
-    object FDQueryMateriaDESCRICAO_MATERIA: TWideStringField
-      FieldName = 'DESCRICAO_MATERIA'
-      Origin = 'DESCRICAO_MATERIA'
+    object FDQueryMateriaMATERIADESCRICAO: TWideStringField
+      FieldName = 'MATERIADESCRICAO'
+      Origin = 'MATERIADESCRICAO'
       Required = True
       Size = 500
     end
@@ -479,33 +479,68 @@ object DataModuleSecretaria: TDataModuleSecretaria
   object FDQueryGrade: TFDQuery
     Connection = FDConn
     SQL.Strings = (
-      'SELECT CURSO_ID, MATERIA_ID, ALUNO_ID '
-      'FROM GRADE')
+      
+        'SELECT ID, GRADENOME, CURSOID, CURSONOME, MATERIAID, MATERIANOME' +
+        ', ALUNOID, ALUNORA, ALUNONOME'
+      'FROM VW_GRADE')
     Left = 560
     Top = 80
-    object FDQueryGradeCURSO_ID: TBCDField
-      FieldName = 'CURSO_ID'
-      Origin = 'CURSO_ID'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+    object FDQueryGradeID: TBCDField
+      FieldName = 'ID'
+      Origin = 'ID'
       Required = True
       Precision = 5
       Size = 0
     end
-    object FDQueryGradeMATERIA_ID: TBCDField
-      FieldName = 'MATERIA_ID'
-      Origin = 'MATERIA_ID'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+    object FDQueryGradeGRADENOME: TWideStringField
+      FieldName = 'GRADENOME'
+      Origin = 'GRADENOME'
+    end
+    object FDQueryGradeCURSOID: TBCDField
+      FieldName = 'CURSOID'
+      Origin = 'CURSOID'
       Required = True
       Precision = 5
       Size = 0
     end
-    object FDQueryGradeALUNO_ID: TBCDField
-      FieldName = 'ALUNO_ID'
-      Origin = 'ALUNO_ID'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+    object FDQueryGradeCURSONOME: TWideStringField
+      FieldName = 'CURSONOME'
+      Origin = 'CURSONOME'
+      Required = True
+      Size = 100
+    end
+    object FDQueryGradeMATERIAID: TBCDField
+      FieldName = 'MATERIAID'
+      Origin = 'MATERIAID'
       Required = True
       Precision = 5
       Size = 0
+    end
+    object FDQueryGradeMATERIANOME: TWideStringField
+      FieldName = 'MATERIANOME'
+      Origin = 'MATERIANOME'
+      Required = True
+      Size = 100
+    end
+    object FDQueryGradeALUNOID: TBCDField
+      FieldName = 'ALUNOID'
+      Origin = 'ALUNOID'
+      Required = True
+      Precision = 5
+      Size = 0
+    end
+    object FDQueryGradeALUNORA: TWideStringField
+      FieldName = 'ALUNORA'
+      Origin = 'ALUNORA'
+      Required = True
+      FixedChar = True
+      Size = 5
+    end
+    object FDQueryGradeALUNONOME: TWideStringField
+      FieldName = 'ALUNONOME'
+      Origin = 'ALUNONOME'
+      Required = True
+      Size = 100
     end
   end
   object FDStoredProcInsereGrade: TFDStoredProc
@@ -517,7 +552,7 @@ object DataModuleSecretaria: TDataModuleSecretaria
     ParamData = <
       item
         Position = 1
-        Name = 'P_CURSO_ID'
+        Name = 'P_MATERIA_CURSO_ID'
         DataType = ftBCD
         FDDataType = dtBCD
         Precision = 5
@@ -525,14 +560,6 @@ object DataModuleSecretaria: TDataModuleSecretaria
       end
       item
         Position = 2
-        Name = 'P_MATERIA_ID'
-        DataType = ftBCD
-        FDDataType = dtBCD
-        Precision = 5
-        ParamType = ptInput
-      end
-      item
-        Position = 3
         Name = 'P_ALUNO_ID'
         DataType = ftBCD
         FDDataType = dtBCD
@@ -554,7 +581,7 @@ object DataModuleSecretaria: TDataModuleSecretaria
     ParamData = <
       item
         Position = 1
-        Name = 'P_CURSO_ID'
+        Name = 'P_ID'
         DataType = ftBCD
         FDDataType = dtBCD
         Precision = 5
@@ -562,14 +589,22 @@ object DataModuleSecretaria: TDataModuleSecretaria
       end
       item
         Position = 2
-        Name = 'P_MATERIA_ID'
+        Name = 'P_NOME'
+        DataType = ftWideString
+        FDDataType = dtWideString
+        ParamType = ptInput
+        Size = 40
+      end
+      item
+        Position = 3
+        Name = 'P_MATERIA_CURSO_ID'
         DataType = ftBCD
         FDDataType = dtBCD
         Precision = 5
         ParamType = ptInput
       end
       item
-        Position = 3
+        Position = 4
         Name = 'P_ALUNO_ID'
         DataType = ftBCD
         FDDataType = dtBCD
@@ -586,23 +621,7 @@ object DataModuleSecretaria: TDataModuleSecretaria
     ParamData = <
       item
         Position = 1
-        Name = 'P_CURSO_ID'
-        DataType = ftBCD
-        FDDataType = dtBCD
-        Precision = 5
-        ParamType = ptInput
-      end
-      item
-        Position = 2
-        Name = 'P_MATERIA_ID'
-        DataType = ftBCD
-        FDDataType = dtBCD
-        Precision = 5
-        ParamType = ptInput
-      end
-      item
-        Position = 3
-        Name = 'P_ALUNO_ID'
+        Name = 'P_ID'
         DataType = ftBCD
         FDDataType = dtBCD
         Precision = 5

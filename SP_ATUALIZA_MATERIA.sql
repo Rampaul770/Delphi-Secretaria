@@ -59,18 +59,11 @@ BEGIN
         IF P_CURSO_ID IS NULL THEN
             RAISE CURSO_ID_INVALIDO;
         END IF;
-        
-        SELECT COUNT(*) INTO V_COUNT
-        FROM CURSO
-        WHERE ID = P_CURSO_ID;
 
     EXCEPTION    
 
         WHEN CURSO_ID_INVALIDO THEN
             RAISE_APPLICATION_ERROR(-20004, 'CODIGO ID DO CURSO INVÁLIDO!');
-            
-        WHEN NO_DATA_FOUND THEN
-            RAISE_APPLICATION_ERROR(-20005, 'CODIGO ID DO CURSO INVÁLIDO!');
         
     END;  
     
@@ -80,7 +73,7 @@ BEGIN
         SET NOME = P_NOME, DESCRICAO = P_DESCRICAO
         WHERE ID = P_ID;
         
-        UPDATE CURSO_MATERIA
+        UPDATE MATERIA_CURSO
         SET CURSO_ID = P_CURSO_ID
         WHERE MATERIA_ID = P_ID;
         
@@ -91,7 +84,7 @@ BEGIN
         WHEN OTHERS THEN
             BEGIN
                 ROLLBACK;
-                RAISE_APPLICATION_ERROR(-20006, 'ERRO INESPERADO - ' || SQLERRM);
+                RAISE_APPLICATION_ERROR(-20005, 'ERRO INESPERADO - ' || SQLERRM);
             END;    
             
     END;

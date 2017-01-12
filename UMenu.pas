@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus,
-  UAlunoArea, UMateriaArea, UCursoArea, USobre,
+  UAlunoArea, UMateriaArea, UCursoArea, UGradeArea, USobre,
   Vcl.ComCtrls, Vcl.ExtCtrls, UData;
 
 type
@@ -74,10 +74,10 @@ end;
 procedure TFrmMenu.Grade1Click(Sender: TObject);
 begin
 
-//  If not Assigned(FrmGrade) Then
-//    FrmGrade := TFrmGrade.Create(Application);
-//
-//  FrmGrade.ShowModal;
+  If not Assigned(FrmGradeArea) Then
+    FrmGradeArea := TFrmGradeArea.Create(Application);
+
+  FrmGradeArea.ShowModal;
 
 end;
 

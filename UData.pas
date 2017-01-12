@@ -47,14 +47,20 @@ type
     DtsGrade: TDataSource;
     FDStoredProcAtualizaGrade: TFDStoredProc;
     FDStoredProcExcluiGrade: TFDStoredProc;
-    FDQueryGradeCURSO_ID: TBCDField;
-    FDQueryGradeMATERIA_ID: TBCDField;
-    FDQueryGradeALUNO_ID: TBCDField;
-    FDQueryMateriaCURSO_ID: TBCDField;
-    FDQueryMateriaNOME_CURSO: TWideStringField;
-    FDQueryMateriaMATERIA_ID: TBCDField;
-    FDQueryMateriaNOME_MATERIA: TWideStringField;
-    FDQueryMateriaDESCRICAO_MATERIA: TWideStringField;
+    FDQueryMateriaCURSOID: TBCDField;
+    FDQueryMateriaCURSONOME: TWideStringField;
+    FDQueryMateriaMATERIAID: TBCDField;
+    FDQueryMateriaMATERIANOME: TWideStringField;
+    FDQueryMateriaMATERIADESCRICAO: TWideStringField;
+    FDQueryGradeCURSOID: TBCDField;
+    FDQueryGradeCURSONOME: TWideStringField;
+    FDQueryGradeMATERIAID: TBCDField;
+    FDQueryGradeMATERIANOME: TWideStringField;
+    FDQueryGradeALUNOID: TBCDField;
+    FDQueryGradeALUNONOME: TWideStringField;
+    FDQueryGradeALUNORA: TWideStringField;
+    FDQueryGradeID: TBCDField;
+    FDQueryGradeGRADENOME: TWideStringField;
   private
     { Private declarations }
   public

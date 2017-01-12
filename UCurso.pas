@@ -146,7 +146,7 @@ begin
       //retorno := IntToStr(Ex.Errors[0].ErrorCode);
 
       Case Ex.Errors[0].ErrorCode of
-        20001 : retorno := '20001 - CODIGO ID INVÁLIDO!';
+        20001 : retorno := '20001 - CÓDIGO ID INVÁLIDO!';
         20002 : retorno := '20002 - NOME INVÁLIDO!';
         20003 : retorno := '20003 - DESCRIÇÃO INVÁLIDA!';
         20004 : retorno := '20004 - ERRO INESPERADO!';
@@ -188,7 +188,7 @@ begin
         //retorno := IntToStr(Ex.Errors[0].ErrorCode);
 
         Case Ex.Errors[0].ErrorCode of
-          20001 : retorno := '20001 - CODIGO ID INVÁLIDO!';
+          20001 : retorno := '20001 - CÓDIGO ID INVÁLIDO!';
           20002 : retorno := '20002 - ERRO INESPERADO!';
         End;
 

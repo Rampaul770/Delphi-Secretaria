@@ -52,7 +52,7 @@ object FrmAlunoArea: TFrmAlunoArea
           Expanded = False
           FieldName = 'ID'
           Title.Alignment = taCenter
-          Title.Caption = 'Registro'
+          Title.Caption = 'C'#243'digo'
           Width = 47
           Visible = True
         end
@@ -69,8 +69,8 @@ object FrmAlunoArea: TFrmAlunoArea
           Expanded = False
           FieldName = 'RA'
           Title.Alignment = taCenter
-          Title.Caption = 'R.A.'
-          Width = 89
+          Title.Caption = 'Registro Acad'#234'mico'
+          Width = 132
           Visible = True
         end
         item

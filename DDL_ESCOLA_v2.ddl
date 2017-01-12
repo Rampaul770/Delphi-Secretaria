@@ -1,5 +1,5 @@
 -- Gerado por Oracle SQL Developer Data Modeler 4.1.5.907
---   em:        2017-01-06 20:23:33 BRST
+--   em:        2017-01-07 11:02:19 BRST
 --   site:      Oracle Database 11g
 --   tipo:      Oracle Database 11g
 
@@ -15,14 +15,6 @@ DROP TABLE CURSO_MATERIA CASCADE CONSTRAINTS ;
 DROP TABLE GRADE CASCADE CONSTRAINTS ;
 
 DROP TABLE MATERIA CASCADE CONSTRAINTS ;
-
-
-DROP SEQUENCE SQ_ALUNO ;
-
-DROP SEQUENCE SQ_CURSO ;
-
-DROP SEQUENCE SQ_MATERIA ;
-
 
 CREATE TABLE ALUNO
   (
@@ -61,11 +53,10 @@ ALTER TABLE CURSO_MATERIA ADD CONSTRAINT CURSO_MATERIA__UN UNIQUE ( CURSO_ID , M
 
 CREATE TABLE GRADE
   (
-    ID               NUMBER (5) NOT NULL ,
     CURSO_MATERIA_ID NUMBER (5) NOT NULL ,
     ALUNO_ID         NUMBER (5) NOT NULL
   ) ;
-ALTER TABLE GRADE ADD CONSTRAINT GRADE_PK PRIMARY KEY ( ID ) ;
+ALTER TABLE GRADE ADD CONSTRAINT GRADE_PK PRIMARY KEY ( CURSO_MATERIA_ID ) ;
 ALTER TABLE GRADE ADD CONSTRAINT GRADE__UN UNIQUE ( ALUNO_ID , CURSO_MATERIA_ID ) ;
 
 
@@ -85,6 +76,14 @@ ALTER TABLE CURSO_MATERIA ADD CONSTRAINT CURSO_MATERIA_MATERIA_FK FOREIGN KEY ( 
 ALTER TABLE GRADE ADD CONSTRAINT GRADE_ALUNO_FK FOREIGN KEY ( ALUNO_ID ) REFERENCES ALUNO ( ID ) ;
 
 ALTER TABLE GRADE ADD CONSTRAINT GRADE_CURSO_MATERIA_FK FOREIGN KEY ( CURSO_MATERIA_ID ) REFERENCES CURSO_MATERIA ( ID ) ;
+
+
+DROP SEQUENCE SQ_ALUNO;
+DROP SEQUENCE SQ_CURSO;
+DROP SEQUENCE SQ_MATERIA;
+DROP SEQUENCE SQ_CURSO_MATERIA;
+DROP SEQUENCE SQ_GRADE;
+
 
 CREATE SEQUENCE SQ_ALUNO
 MINVALUE 1
@@ -124,46 +123,3 @@ MAXVALUE 1000
 INCREMENT BY 1
 START WITH 1
 NOCACHE;
-
-
--- Relatório do Resumo do Oracle SQL Developer Data Modeler: 
--- 
--- CREATE TABLE                             5
--- CREATE INDEX                             0
--- ALTER TABLE                             11
--- CREATE VIEW                              0
--- ALTER VIEW                               0
--- CREATE PACKAGE                           0
--- CREATE PACKAGE BODY                      0
--- CREATE PROCEDURE                         0
--- CREATE FUNCTION                          0
--- CREATE TRIGGER                           0
--- ALTER TRIGGER                            0
--- CREATE COLLECTION TYPE                   0
--- CREATE STRUCTURED TYPE                   0
--- CREATE STRUCTURED TYPE BODY              0
--- CREATE CLUSTER                           0
--- CREATE CONTEXT                           0
--- CREATE DATABASE                          0
--- CREATE DIMENSION                         0
--- CREATE DIRECTORY                         0
--- CREATE DISK GROUP                        0
--- CREATE ROLE                              0
--- CREATE ROLLBACK SEGMENT                  0
--- CREATE SEQUENCE                          0
--- CREATE MATERIALIZED VIEW                 0
--- CREATE SYNONYM                           0
--- CREATE TABLESPACE                        0
--- CREATE USER                              0
--- 
--- DROP TABLESPACE                          0
--- DROP DATABASE                            0
--- 
--- REDACTION POLICY                         0
--- 
--- ORDS DROP SCHEMA                         0
--- ORDS ENABLE SCHEMA                       0
--- ORDS ENABLE OBJECT                       0
--- 
--- ERRORS                                   0
--- WARNINGS                                 0

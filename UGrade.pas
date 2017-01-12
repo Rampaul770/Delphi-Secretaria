@@ -3,44 +3,357 @@ unit UGrade;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus;
+  System.SysUtils, Data.DB, UData, FireDAC.Phys.OracleWrapper;
 
-type
-  TFrmGrade = class(TForm)
-    MainMenu1: TMainMenu;
-    Cadastrar1: TMenuItem;
-    Pesquisar1: TMenuItem;
-    Sair1: TMenuItem;
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure Sair1Click(Sender: TObject);
-  private
-    { Private declarations }
-  public
-    { Public declarations }
-  end;
+type TGrade = class
 
-var
-  FrmGrade: TFrmGrade;
+private
 
-implementation
+// atributos e metodos privados
+// atributos privados
 
-{$R *.dfm}
+Fid: Integer;
+FnomeGrade: Integer;
+Fmateriacursoid: Integer;
+Falunoid: Integer;
 
-procedure TFrmGrade.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
+protected
 
-  Action := caFree;
-  FrmGrade := Nil;
+// atributos e metodos protegidos
+
+public
+
+// atibutos e metodos publicos
+// propiedade publicas
+
+property MateriaCursoID: Integer read Fmateriacursoid;
+property AlunoID: Integer read Falunoid write Falunoid;
+
+
+// declaração do metodo construtor
+Constructor Create; overload;
+Constructor Create(ID: Integer); overload;
+
+// declaração do metodo destrutor
+Destructor Destroy; Override;
+
+// metodos da classe
+procedure CarregarGrade(ID: Integer);
+
+function CadastrarGrade(): String;
+function AtualizarGrade(ID: Integer): String;
+function ExcluirGrade(): String;
+function BuscarGrades(): TDataSource; overload;
+function BuscarGrades(Nome: String): TDataSource; overload;
+function BuscarCursos(Nome: String): TDataSource;
+function BuscarMaterias(Nome: String): TDataSource;
+function BuscarAlunos(Nome: String): TDataSource;
 
 end;
 
-procedure TFrmGrade.Sair1Click(Sender: TObject);
+implementation
+
+{ Tmateria }
+
+constructor TGrade.Create;
 begin
 
-  Close;
-  FrmGrade := Nil;
+// metodo contrutor
+
+end;
+
+constructor TGrade.Create(ID: Integer);
+begin
+
+// metodo contrutor
+
+  CarregarGrade(ID);
+
+end;
+
+destructor TGrade.Destroy;
+begin
+
+// metodo destrutor
+
+inherited;
+
+end;
+
+function TGrade.CadastrarGrade(): String;
+var
+  retorno: String;
+begin
+
+  try
+
+    with UData.DataModuleSecretaria do
+    begin
+      FDConn.Connected := True;
+
+      with FDStoredProcInsereGrade do
+      begin
+        ParamByName('P_NOME').Value := Fnomegrade;
+        ParamByName('P_MATERIA_CURSO_ID').Value := Fmateriacursoid;
+        ParamByName('P_ALUNO_ID').Value := Falunoid;
+        ExecProc;
+      end;
+
+      FDConn.Connected := False;
+    end;
+
+  except
+
+    On Ex : EOCINativeException do
+
+      //retorno := IntToStr(Ex.Errors[0].ErrorCode);
+
+      Case Ex.Errors[0].ErrorCode of
+        20001 : retorno := '20001 - NOME INVÁLIDO!';
+        20002 : retorno := '20002 - CÓDIGO ID DA MATERIA INVÁLIDO!';
+        20003 : retorno := '20003 - CÓDIGO ID DE ALUNO INVÁLIDO!';
+        20004 : retorno := '20004 - ERRO INESPERADO!';
+      End;
+
+  end;
+
+  Result := retorno;
+
+end;
+
+function TGrade.AtualizarGrade(ID: Integer): String;
+var
+  retorno: String;
+begin
+
+  try
+
+    with UData.DataModuleSecretaria do
+    begin
+      FDConn.Connected := True;
+
+      with FDStoredProcAtualizaMateria do
+      begin
+        ParamByName('P_ID').Value := Fid;
+        ParamByName('P_NOME').Value := Fnomegrade;
+        ParamByName('P_MATERIA_CURSO_ID').Value := Fmateriacursoid;
+        ParamByName('P_ALUNO_ID').Value := Falunoid;
+        ExecProc;
+      end;
+
+      FDConn.Connected := False;
+    end;
+
+  except
+
+    On Ex : EOCINativeException do
+
+      //retorno := IntToStr(Ex.Errors[0].ErrorCode);
+
+      Case Ex.Errors[0].ErrorCode of
+        20001 : retorno := '20001 - NOME INVÁLIDO!';
+        20002 : retorno := '20002 - CÓDIGO ID DA GRADE INVÁLIDO!';
+        20003 : retorno := '20003 - CODIGO ID DA MATERIA INVÁLIDO!';
+        20004 : retorno := '20004 - CODIGO ID DE ALUNO INVÁLIDO!';
+        20005 : retorno := '20005 - ERRO INESPERADO';
+      End;
+
+  end;
+
+  Result := retorno;
+
+end;
+
+function TGrade.ExcluirGrade(): String;
+var
+  retorno: String;
+begin
+
+  if Self.Fmateriacursoid > 0 then
+  begin
+
+    try
+
+      with UData.DataModuleSecretaria do
+      begin
+        FDConn.Connected := True;
+
+        with FDStoredProcExcluiMateria do
+        begin
+          ParamByName('P_ID').Value := Self.Fmateriacursoid;
+          ExecProc;
+        end;
+
+        FDConn.Connected := False;
+      end;
+
+    except
+
+      On Ex : EOCINativeException do
+
+        //retorno := IntToStr(Ex.Errors[0].ErrorCode);
+
+        Case Ex.Errors[0].ErrorCode of
+          20001 : retorno := '20001 - CÓDIGO ID DA MATERIA INVÁLIDO!';
+          20002 : retorno := '20002 - ERRO INESPERADO!';
+        End;
+
+    end;
+
+  end;
+
+  Result := retorno;
+
+end;
+
+procedure TGrade.CarregarGrade(ID: Integer);
+begin
+
+  with UData.DataModuleSecretaria do
+  begin
+    FDConn.Connected := True;
+
+    with FDQueryMateria do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Add('SELECT MATERIA_CURSO_ID, ALUNO_ID ' +
+              'FROM GRADE ' +
+              'WHERE MATERIA_CURSO_ID = ' + IntToStr(ID));
+
+      Open();
+    end;
+
+    self.Fmateriacursoid := ID;
+    Self.Falunoid := FDQueryGradeALUNOID.AsInteger;
+
+  end;
+
+end;
+
+function TGrade.BuscarGrades(): TDataSource;
+begin
+
+    with UData.DataModuleSecretaria do
+    begin
+      FDConn.Connected := True;
+
+      with FDQueryGrade do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Add('SELECT ID, GRADENOME, CURSOID, CURSONOME, MATERIAID, MATERIANOME, ALUNOID, ALUNORA, ALUNONOME ' +
+                'FROM VW_GRADE ' +
+                'ORDER BY ID');
+
+        Open();
+      end;
+
+      DtsMateria.DataSet := FDQueryMateria;
+      Result := DtsMateria;
+    end;
+
+end;
+
+function TGrade.BuscarGrades(Nome: String): TDataSource;
+begin
+
+    with UData.DataModuleSecretaria do
+    begin
+      FDConn.Connected := True;
+
+      with FDQueryGrade do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Add('SELECT ID, GRADENOME, CURSOID, CURSONOME, MATERIAID, MATERIANOME, ALUNOID, ALUNORA, ALUNONOME ' +
+                'FROM VW_GRADE ' +
+                'WHERE GRADENOME LIKE ' + Chr(39) + '%' + Nome + '%' + Chr(39) + ' ' +
+                'ORDER BY ID');
+
+        Open();
+      end;
+
+      DtsGrade.DataSet := FDQueryGrade;
+      Result := DtsGrade;
+    end;
+
+end;
+
+function TGrade.BuscarCursos(Nome: String): TDataSource;
+begin
+
+    with UData.DataModuleSecretaria do
+    begin
+      FDConn.Connected := True;
+
+      with FDQueryGrade do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Add('SELECT ID, GRADENOME, CURSOID, CURSONOME, MATERIAID, MATERIANOME, ALUNOID, ALUNORA, ALUNONOME ' +
+                'FROM VW_GRADE ' +
+                'WHERE CURSONOME LIKE ' + Chr(39) + '%' + Nome + '%' + Chr(39) + ' ' +
+                'ORDER BY ID');
+
+        Open();
+      end;
+
+      DtsGrade.DataSet := FDQueryGrade;
+      Result := DtsGrade;
+    end;
+
+end;
+
+function TGrade.BuscarMaterias(Nome: String): TDataSource;
+begin
+
+    with UData.DataModuleSecretaria do
+    begin
+      FDConn.Connected := True;
+
+      with FDQueryGrade do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Add('SELECT ID, GRADENOME, CURSOID, CURSONOME, MATERIAID, MATERIANOME, ALUNOID, ALUNORA, ALUNONOME ' +
+                'FROM VW_GRADE ' +
+                'WHERE MATERIANOME LIKE ' + Chr(39) + '%' + Nome + '%' + Chr(39) + ' ' +
+                'ORDER BY ID');
+
+        Open();
+      end;
+
+      DtsGrade.DataSet := FDQueryGrade;
+      Result := DtsGrade;
+    end;
+
+end;
+
+function TGrade.BuscarAlunos(Nome: String): TDataSource;
+begin
+
+    with UData.DataModuleSecretaria do
+    begin
+      FDConn.Connected := True;
+
+      with FDQueryGrade do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Add('SELECT ID, GRADENOME, CURSOID, CURSONOME, MATERIAID, MATERIANOME, ALUNOID, ALUNORA, ALUNONOME ' +
+                'FROM VW_GRADE ' +
+                'WHERE ALUNONOME LIKE ' + Chr(39) + '%' + Nome + '%' + Chr(39) + ' ' +
+                'ORDER BY ID');
+
+        Open();
+      end;
+
+      DtsGrade.DataSet := FDQueryGrade;
+      Result := DtsGrade;
+    end;
 
 end;
 
 end.
+

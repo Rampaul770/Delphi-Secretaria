@@ -52,7 +52,7 @@ object FrmCursoArea: TFrmCursoArea
           Expanded = False
           FieldName = 'ID'
           Title.Alignment = taCenter
-          Title.Caption = 'Registro'
+          Title.Caption = 'C'#243'digo'
           Width = 47
           Visible = True
         end

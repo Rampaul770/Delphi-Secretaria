@@ -124,11 +124,11 @@ begin
 
       Case Ex.Errors[0].ErrorCode of
         20001 : retorno := '20001 - NOME INVÁLIDO!';
-        20002 : retorno := '20002 - CODIGO DO RA INVÁLIDO!';
-        20003 : retorno := '20003 - CODIGO DO RA INVÁLIDO!';
+        20002 : retorno := '20002 - CÓDIGO DO RA INVÁLIDO!';
+        20003 : retorno := '20003 - CÓDIGO DO RA INVÁLIDO!';
         20004 : retorno := '20004 - ENDERECO INVÁLIDO!';
-        20005 : retorno := '20005 - CODIGO DO CEP INVÁLIDO!';
-        20006 : retorno := '20006 - CODIGO DO CEP INVÁLIDO!';
+        20005 : retorno := '20005 - CÓDIGO DO CEP INVÁLIDO!';
+        20006 : retorno := '20006 - CÓDIGO DO CEP INVÁLIDO!';
         20007 : retorno := '20007 - TELEFONE INVÁLIDO!';
         20008 : retorno := '20008 - TELEFONE INVÁLIDO!';
         20009 : retorno := '20009 - CELULAR INVÁLIDO!';
@@ -178,13 +178,13 @@ begin
       //retorno := IntToStr(Ex.Errors[0].ErrorCode);
 
       Case Ex.Errors[0].ErrorCode of
-        20001 : retorno := '20001 - CODIGO ID INVÁLIDO!';
+        20001 : retorno := '20001 - CÓDIGO ID INVÁLIDO!';
         20002 : retorno := '20002 - NOME INVÁLIDO!';
-        20003 : retorno := '20003 - CODIGO DO RA INVÁLIDO!';
-        20004 : retorno := '20004 - CODIGO DO RA INVÁLIDO!';
+        20003 : retorno := '20003 - CÓDIGO DO RA INVÁLIDO!';
+        20004 : retorno := '20004 - CÓDIGO DO RA INVÁLIDO!';
         20005 : retorno := '20005 - ENDERECO INVÁLIDO!';
-        20006 : retorno := '20006 - CODIGO DO CEP INVÁLIDO!';
-        20007 : retorno := '20007 - CODIGO DO CEP INVÁLIDO!';
+        20006 : retorno := '20006 - CÓDIGO DO CEP INVÁLIDO!';
+        20007 : retorno := '20007 - CÓDIGO DO CEP INVÁLIDO!';
         20008 : retorno := '20008 - TELEFONE INVÁLIDO!';
         20009 : retorno := '20009 - TELEFONE INVÁLIDO!';
         20010 : retorno := '20010 - CELULAR INVÁLIDO!';
@@ -230,7 +230,7 @@ begin
         //retorno := IntToStr(Ex.Errors[0].ErrorCode);
 
         Case Ex.Errors[0].ErrorCode of
-          20001 : retorno := '20001 - CODIGO ID INVÁLIDO!';
+          20001 : retorno := '20001 - CÓDIGO ID INVÁLIDO!';
           20002 : retorno := '20002 - ERRO INESPERADO!';
         End;
 

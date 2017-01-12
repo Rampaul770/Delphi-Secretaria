@@ -8,9 +8,9 @@
 <existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
 <parsed>true</parsed>
 <columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
-<Column name="ID" id="4347AB0B-1E91-3BCA-4E06-AD336B6F626B">
+<Column name="ID" id="1CCE92EB-423E-1DAA-62C4-9C74A3692DEA">
 <createdBy>andre</createdBy>
-<createdTime>2017-01-06 22:19:35 UTC</createdTime>
+<createdTime>2017-01-07 16:27:34 UTC</createdTime>
 <ownerDesignName>MER_ESCOLA</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
@@ -19,7 +19,19 @@
 <ownDataTypeParameters>,5,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="CURSO_MATERIA_ID" id="6287A7C0-C9A5-60D3-D889-ABAD565438E9">
+<Column name="NOME" id="2113E97F-EE76-6490-16C0-787B43C012E2">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-07 16:40:28 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<ownDataTypeParameters>20,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MATERIA_CURSO_ID" id="6287A7C0-C9A5-60D3-D889-ABAD565438E9">
 <createdBy>andre</createdBy>
 <createdTime>2017-01-06 22:19:02 UTC</createdTime>
 <ownerDesignName>MER_ESCOLA</ownerDesignName>
@@ -59,7 +71,7 @@
 <indexState>Primary Constraint</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="4347AB0B-1E91-3BCA-4E06-AD336B6F626B"/>
+<colUsage columnID="1CCE92EB-423E-1DAA-62C4-9C74A3692DEA"/>
 </indexColumnUsage>
 </ind_PK_UK>
 <ind_PK_UK id="30FA9F17-89D8-860F-B25B-887CC72FE042" name="GRADE__UN">
@@ -83,7 +95,7 @@
 <colUsage columnID="B8DF5EF0-8FAA-D5CD-C230-1703CA5AE023"/>
 </indexColumnUsage>
 </ind_PK_UK>
-<ind_PK_UK id="02506502-2292-CF90-8F06-EAB6E9506EF7" name="GRADE_CURSO_MATERIA_FK">
+<ind_PK_UK id="02506502-2292-CF90-8F06-EAB6E9506EF7" name="GRADE_MATERIA_CURSO_FK">
 <createdBy>andre</createdBy>
 <createdTime>2017-01-06 22:19:02 UTC</createdTime>
 <ownerDesignName>MER_ESCOLA</ownerDesignName>
