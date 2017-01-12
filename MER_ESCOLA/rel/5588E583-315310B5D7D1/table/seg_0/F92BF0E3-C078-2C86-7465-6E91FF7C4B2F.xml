@@ -1,0 +1,99 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="F92BF0E3-C078-2C86-7465-6E91FF7C4B2F" name="GRADE">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-03 19:42:16 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<ordsAlias>table_5</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CURSO_ID" id="983A6373-6D9D-85C5-B5A4-5C240AFF83E7">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-03 19:43:02 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E3AECFE0-6691-DBBA-F841-F9D845796EDE" referredColumn="ED368054-BDFE-25AE-092B-8BFF545A3821"/>
+</associations>
+</Column>
+<Column name="MATERIA_ID" id="C317F82B-F9E2-89E5-7CB9-9A62FADD38D7">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-03 19:43:17 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="0B2AABF2-AF0C-158A-BE94-4D0EA8CD1FB4" referredColumn="BC78768A-44AC-4388-7F51-49DBDA841B57"/>
+</associations>
+</Column>
+<Column name="ALUNO_ID" id="B8DF5EF0-8FAA-D5CD-C230-1703CA5AE023">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-03 19:43:36 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="45A696EC-A834-4EED-4640-A6DC4FC30478" referredColumn="E86412DD-5DDE-56DC-A55D-D49822ED9043"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="26BDBE36-2F2A-C319-4FB8-35B16EE6E75E" name="GRADE_PK">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-03 21:52:49 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="983A6373-6D9D-85C5-B5A4-5C240AFF83E7"/>
+<colUsage columnID="C317F82B-F9E2-89E5-7CB9-9A62FADD38D7"/>
+<colUsage columnID="B8DF5EF0-8FAA-D5CD-C230-1703CA5AE023"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="DF66F853-D243-D995-487E-A57F5BFEEDF2" name="GRADE_CURSO_FK">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-03 19:43:02 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="983A6373-6D9D-85C5-B5A4-5C240AFF83E7"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="223F8F72-86D7-0F16-A08B-AC280B546FF2" name="GRADE_MATERIA_FK">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-03 19:43:17 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C317F82B-F9E2-89E5-7CB9-9A62FADD38D7"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="0F2F3B9E-DB0B-7899-C43E-21DCB35E87CA" name="GRADE_ALUNO_FK">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-03 19:43:36 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B8DF5EF0-8FAA-D5CD-C230-1703CA5AE023"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

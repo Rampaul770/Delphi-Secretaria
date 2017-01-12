@@ -1,0 +1,14 @@
+program ProjetoEscola;
+
+uses
+  Vcl.Forms,
+  UMenu in 'UMenu.pas' {FrmMenu};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TFrmMenu, FrmMenu);
+  Application.Run;
+end.

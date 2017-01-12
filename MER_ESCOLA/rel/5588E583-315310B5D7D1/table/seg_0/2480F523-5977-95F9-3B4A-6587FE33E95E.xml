@@ -1,0 +1,123 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="2480F523-5977-95F9-3B4A-6587FE33E95E" name="ALUNO">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-02 14:56:15 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<ordsAlias>table_4</ordsAlias>
+<useDDLTransformationScript>true</useDDLTransformationScript>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="E86412DD-5DDE-56DC-A55D-D49822ED9043">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-02 15:00:33 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOME" id="BB200832-4B7F-8C98-AFA7-06B9D0DB64D3">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-02 15:02:17 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="RA" id="E826C796-6662-5A8C-8FA0-6F1304C7B18E">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-02 15:02:17 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>5</dataTypeSize>
+<ownDataTypeParameters>5,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ENDERECO" id="0D8C1082-6F92-06AE-0AE9-49CAB35B5C2A">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-02 15:02:17 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CEP" id="4BD074EF-C8C2-745F-456F-404EC1E6B970">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-02 15:02:17 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>8</dataTypeSize>
+<ownDataTypeParameters>8,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TELEFONE" id="4335799B-9C9F-61AF-C183-2D50B77FBC1B">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-02 15:03:34 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>11</dataTypePrecision>
+<ownDataTypeParameters>,11,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CELULAR" id="08A87E7A-D75D-5419-800E-83086E06182F">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-02 15:03:34 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>11</dataTypePrecision>
+<ownDataTypeParameters>,11,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NASCIMENTO" id="742A3365-64B7-80E7-8E78-D54CC536FDA2">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-02 15:03:34 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MATRICULA" id="E4227AAA-BB0B-675A-5AF4-95DA04978BD3">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-02 15:03:34 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="BEA4D152-41F5-80AF-91F7-6A87D875C747" name="ALUNO_PK">
+<createdBy>andre</createdBy>
+<createdTime>2017-01-02 15:00:37 UTC</createdTime>
+<ownerDesignName>MER_ESCOLA</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E86412DD-5DDE-56DC-A55D-D49822ED9043"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

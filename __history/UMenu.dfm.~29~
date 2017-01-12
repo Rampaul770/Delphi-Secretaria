@@ -1,0 +1,57 @@
+object FrmMenu: TFrmMenu
+  Left = 0
+  Top = 0
+  Caption = 'Secretaria'
+  ClientHeight = 201
+  ClientWidth = 447
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  Menu = MainMenu1
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  WindowState = wsMaximized
+  OnClose = FormClose
+  PixelsPerInch = 96
+  TextHeight = 13
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 182
+    Width = 447
+    Height = 19
+    Panels = <>
+  end
+  object MainMenu1: TMainMenu
+    Left = 200
+    Top = 112
+    object Cadastro1: TMenuItem
+      Caption = '&Cadastro'
+      object Aluno1: TMenuItem
+        Caption = '&Alunos'
+        OnClick = Aluno1Click
+      end
+      object Materia1: TMenuItem
+        Caption = '&Materias'
+        OnClick = Materia1Click
+      end
+      object Cursos1: TMenuItem
+        Caption = 'Curso&s'
+        OnClick = Cursos1Click
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object Grade1: TMenuItem
+        Caption = '&Grade de Cursos'
+        OnClick = Grade1Click
+      end
+    end
+    object Sair1: TMenuItem
+      Caption = 'Sai&r'
+      OnClick = Sair1Click
+    end
+  end
+end

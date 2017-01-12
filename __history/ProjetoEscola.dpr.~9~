@@ -1,0 +1,24 @@
+program ProjetoEscola;
+
+uses
+  Vcl.Forms,
+  UMenu in 'UMenu.pas' {FrmMenu},
+  UAluno in 'UAluno.pas' {FrmAluno},
+  UMateria in 'UMateria.pas' {FrmMateria},
+  UCurso in 'UCurso.pas' {FrmCurso},
+  UGrade in 'UGrade.pas' {FrmGrade},
+  UData in 'UData.pas' {DataModule1: TDataModule};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TFrmMenu, FrmMenu);
+  Application.CreateForm(TFrmAluno, FrmAluno);
+  Application.CreateForm(TFrmMateria, FrmMateria);
+  Application.CreateForm(TFrmCurso, FrmCurso);
+  Application.CreateForm(TFrmGrade, FrmGrade);
+  Application.CreateForm(TDataModule1, DataModule1);
+  Application.Run;
+end.
