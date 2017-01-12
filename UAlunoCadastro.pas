@@ -277,7 +277,7 @@ begin
       Nascimento := FormatDateTime('yyyy-mm-dd', StrToDate(MskNascimento.EditText));
     end;
 
-    Retorno := Aluno.AtualizarAluno(ID);
+    Retorno := Aluno.AtualizarAluno();
 
     if Retorno = '' then
       MessageBox(FrmAlunoCadastro.Handle, 'Aluno atualizado com sucesso!', 'Aviso', MB_OK or MB_ICONINFORMATION)

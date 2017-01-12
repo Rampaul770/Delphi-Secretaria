@@ -37,16 +37,17 @@ property AlunoID: Integer read Falunoid write Falunoid;
 
 // declaração do metodo construtor
 Constructor Create; overload;
-Constructor Create(ID: Integer); overload;
+//Constructor Create(ID: Integer); overload;
+constructor Create(ID, CursoID, MateriaID, AlunoID: Integer); overload;
 
 // declaração do metodo destrutor
 Destructor Destroy; Override;
 
 // metodos da classe
-procedure CarregarGrade(ID: Integer);
+procedure CarregarGrade(ID, CursoID, MateriaID, AlunoID: Integer);
 
 function CadastrarGrade(): String;
-function AtualizarGrade(ID: Integer): String;
+function AtualizarGrade(CursoID, MateriaID, AlunoID: Integer): String;
 function ExcluirGrade(): String;
 function BuscarGrades(): TDataSource; overload;
 function BuscarGrades(Nome: String): TDataSource; overload;
@@ -68,12 +69,12 @@ begin
 
 end;
 
-constructor TGrade.Create(ID: Integer);
+constructor TGrade.Create(ID, CursoID, MateriaID, AlunoID: Integer);
 begin
 
 // metodo contrutor
 
-  CarregarGrade(ID);
+  CarregarGrade(ID, CursoID, MateriaID, AlunoID);
 
 end;
 
@@ -113,14 +114,15 @@ begin
 
     On Ex : EOCINativeException do
 
-      //retorno := IntToStr(Ex.Errors[0].ErrorCode);
-
       Case Ex.Errors[0].ErrorCode of
+        00001 : retorno := '00001 - CURSO, MATÉRIA, ALUNO JÁ CADASTRADO PARA ESSA GRADE!';
         20001 : retorno := '20001 - NOME INVÁLIDO!';
-        20002 : retorno := '20002 - CÓDIGO ID DA MATERIA INVÁLIDO!';
-        20003 : retorno := '20003 - CÓDIGO ID DE ALUNO INVÁLIDO!';
-        20004 : retorno := '20004 - CÓDIGO ID DE MATÉRIA OU CURSO INVÁLIDOS!';
-        20005 : retorno := '20005 - ERRO INESPERADO!';
+        20002 : retorno := '20002 - CÓDIGO ID DO CURSO INVÁLIDO!';
+        20003 : retorno := '20003 - CÓDIGO ID DA MATÉRIA INVÁLIDO!';
+        20004 : retorno := '20004 - CÓDIGO ID DE ALUNO INVÁLIDO!';
+        20005 : retorno := '20005 - CÓDIGO ID DE MATÉRIA OU CURSO INVÁLIDOS!';
+        20006 : retorno := '20006 - CURSO, MATÉRIA E ALUNO ESPECIFICADO JÁ CADASTRADOS PARA ESSA GRADE!';
+        20007 : retorno := '20007 - ERRO INESPERADO';
       End;
 
   end;
@@ -129,7 +131,7 @@ begin
 
 end;
 
-function TGrade.AtualizarGrade(ID: Integer): String;
+function TGrade.AtualizarGrade(CursoID, MateriaID, AlunoID: Integer): String;
 var
   retorno: String;
 begin
@@ -147,6 +149,9 @@ begin
         ParamByName('P_CURSO_ID').Value := Fcursoid;
         ParamByName('P_MATERIA_ID').Value := Fmateriaid;
         ParamByName('P_ALUNO_ID').Value := Falunoid;
+        ParamByName('P_CURSO_ID_NOVO').Value := CursoID;
+        ParamByName('P_MATERIA_ID_NOVO').Value := MateriaID;
+        ParamByName('P_ALUNO_ID_NOVO').Value := AlunoID;
         ExecProc;
       end;
 
@@ -157,8 +162,6 @@ begin
 
     On Ex : EOCINativeException do
 
-      //retorno := IntToStr(Ex.Errors[0].ErrorCode);
-
       Case Ex.Errors[0].ErrorCode of
         20001 : retorno := 'CÓDIGO ID DA GRADE INVÁLIDO!';
         20002 : retorno := 'NOME INVÁLIDO!';
@@ -166,7 +169,9 @@ begin
         20004 : retorno := 'CÓDIGO ID DA MATÉRIA INVÁLIDO!';
         20005 : retorno := 'CÓDIGO ID DE ALUNO INVÁLIDO!';
         20006 : retorno := 'CÓDIGO ID DE MATÉRIA OU CURSO INVÁLIDOS!';
-        20007 : retorno := 'ERRO INESPERADO';
+        20007 : retorno := 'CÓDIGO ID DE MATÉRIA OU CURSO INVÁLIDOS!';
+        20008 : retorno := 'CURSO, MATÉRIA E ALUNO ESPECIFICADO JÁ CADASTRADOS PARA ESSA GRADE!';
+        20009 : retorno := 'ERRO INESPERADO';
       End;
 
   end;
@@ -192,6 +197,9 @@ begin
         with FDStoredProcExcluiGrade do
         begin
           ParamByName('P_ID').Value := Self.Fid;
+          ParamByName('P_CURSO_ID').Value := Fcursoid;
+          ParamByName('P_MATERIA_ID').Value := Fmateriaid;
+          ParamByName('P_ALUNO_ID').Value := Falunoid;
           ExecProc;
         end;
 
@@ -202,11 +210,13 @@ begin
 
       On Ex : EOCINativeException do
 
-        //retorno := IntToStr(Ex.Errors[0].ErrorCode);
-
         Case Ex.Errors[0].ErrorCode of
-          20001 : retorno := '20001 - CÓDIGO ID DA MATERIA INVÁLIDO!';
-          20002 : retorno := '20002 - ERRO INESPERADO!';
+          20001 : retorno := '20001 - CÓDIGO ID DA GRADE INVÁLIDO!';
+          20002 : retorno := '20002 - CÓDIGO ID DO CURSO INVÁLIDO!';
+          20003 : retorno := '20003 - CÓDIGO ID DA MATÉRIA INVÁLIDO!';
+          20004 : retorno := '20004 - CÓDIGO ID DO ALUNO INVÁLIDO!';
+          20005 : retorno := '20005 - CÓDIGO ID DE CURSO OU MATÉRIA INVÁLIDOS!';
+          20006 : retorno := '20006 - ERRO INESPERADO';
         End;
 
     end;
@@ -217,7 +227,7 @@ begin
 
 end;
 
-procedure TGrade.CarregarGrade(ID: Integer);
+procedure TGrade.CarregarGrade(ID, CursoID, MateriaID, AlunoID: Integer);
 begin
 
   with UData.DataModuleSecretaria do
@@ -230,13 +240,17 @@ begin
       SQL.Clear;
       SQL.Add('SELECT ID, GRADENOME, CURSOID, CURSONOME, MATERIAID, MATERIANOME, ALUNOID, ALUNORA, ALUNONOME ' +
               'FROM VW_GRADE ' +
-              'WHERE ID = ' + IntToStr(ID));
+              'WHERE ID = ' + IntToStr(ID) + ' ' +
+              'AND CURSOID = ' + IntToStr(CursoID) + ' ' +
+              'AND MATERIAID = ' + IntToStr(MateriaID) + ' ' +
+              'AND ALUNOID = ' + IntToStr(AlunoID));
 
       Open();
     end;
 
     self.Fid := ID;
     self.Fnome := FDQueryGradeGRADENOME.Value;
+    self.Fcursoid := FDQueryGradeCURSOID.AsInteger;
     self.Fmateriaid := FDQueryGradeMATERIAID.AsInteger;
     Self.Falunoid := FDQueryGradeALUNOID.AsInteger;
 

@@ -157,19 +157,25 @@ procedure TFrmGradeArea.Excluir1Click(Sender: TObject);
 var
   Grade: TGrade;
   ID: Integer;
+  CursoID: Integer;
+  MateriaID: Integer;
+  AlunoID: Integer;
 begin
 
   if DbgGrade.Fields[0].Text = '' then
     Exit;
 
   ID := StrToInt(DbgGrade.Fields[0].Text);
+  CursoID := StrToInt(DbgGrade.Fields[2].Text);
+  MateriaID := StrToInt(DbgGrade.Fields[4].Text);
+  AlunoID := StrToInt(DbgGrade.Fields[6].Text);
 
   if MessageBox(Handle, 'Deseja realmente excluir essa grade?',
                 'Aviso', MB_YESNO or MB_ICONQUESTION) = ID_YES then
     begin
       try
 
-        Grade := TGrade.Create(ID);
+        Grade := TGrade.Create(ID, CursoID, MateriaID, AlunoID);
         Grade.ExcluirGrade();
 
         Grade.BuscarGrades;

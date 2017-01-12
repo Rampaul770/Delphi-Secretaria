@@ -596,14 +596,6 @@ object DataModuleSecretaria: TDataModuleSecretaria
       end
       item
         Position = 2
-        Name = 'P_NOME'
-        DataType = ftWideString
-        FDDataType = dtWideString
-        ParamType = ptInput
-        Size = 40
-      end
-      item
-        Position = 3
         Name = 'P_CURSO_ID'
         DataType = ftBCD
         FDDataType = dtBCD
@@ -611,7 +603,7 @@ object DataModuleSecretaria: TDataModuleSecretaria
         ParamType = ptInput
       end
       item
-        Position = 4
+        Position = 3
         Name = 'P_MATERIA_ID'
         DataType = ftBCD
         FDDataType = dtBCD
@@ -619,8 +611,40 @@ object DataModuleSecretaria: TDataModuleSecretaria
         ParamType = ptInput
       end
       item
-        Position = 5
+        Position = 4
         Name = 'P_ALUNO_ID'
+        DataType = ftBCD
+        FDDataType = dtBCD
+        Precision = 5
+        ParamType = ptInput
+      end
+      item
+        Position = 5
+        Name = 'P_NOME'
+        DataType = ftWideString
+        FDDataType = dtWideString
+        ParamType = ptInput
+        Size = 40
+      end
+      item
+        Position = 6
+        Name = 'P_CURSO_ID_NOVO'
+        DataType = ftBCD
+        FDDataType = dtBCD
+        Precision = 5
+        ParamType = ptInput
+      end
+      item
+        Position = 7
+        Name = 'P_MATERIA_ID_NOVO'
+        DataType = ftBCD
+        FDDataType = dtBCD
+        Precision = 5
+        ParamType = ptInput
+      end
+      item
+        Position = 8
+        Name = 'P_ALUNO_ID_NOVO'
         DataType = ftBCD
         FDDataType = dtBCD
         Precision = 5
@@ -637,6 +661,30 @@ object DataModuleSecretaria: TDataModuleSecretaria
       item
         Position = 1
         Name = 'P_ID'
+        DataType = ftBCD
+        FDDataType = dtBCD
+        Precision = 5
+        ParamType = ptInput
+      end
+      item
+        Position = 2
+        Name = 'P_CURSO_ID'
+        DataType = ftBCD
+        FDDataType = dtBCD
+        Precision = 5
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = 'P_MATERIA_ID'
+        DataType = ftBCD
+        FDDataType = dtBCD
+        Precision = 5
+        ParamType = ptInput
+      end
+      item
+        Position = 4
+        Name = 'P_ALUNO_ID'
         DataType = ftBCD
         FDDataType = dtBCD
         Precision = 5

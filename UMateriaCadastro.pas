@@ -244,7 +244,7 @@ begin
       CursoID := DbcCurso.KeyValue;
     end;
 
-    Retorno := Materia.AtualizarMateria(ID);
+    Retorno := Materia.AtualizarMateria();
 
     if Retorno = '' then
       MessageBox(FrmMateriaCadastro.Handle, 'Matéria atualizada com sucesso!', 'Aviso', MB_OK or MB_ICONINFORMATION)

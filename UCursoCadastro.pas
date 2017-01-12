@@ -202,7 +202,7 @@ begin
       Descricao := TxtDescricao.Text;
     end;
 
-    Retorno := Curso.AtualizarCurso(ID);
+    Retorno := Curso.AtualizarCurso();
 
     if Retorno = '' then
       MessageBox(FrmCursoCadastro.Handle, 'Curso atualizado com sucesso!', 'Aviso', MB_OK or MB_ICONINFORMATION)

@@ -53,7 +53,7 @@ Destructor Destroy; Override;
 procedure CarregarAluno(ID: Integer);
 
 function CadastrarAluno(): String;
-function AtualizarAluno(ID: Integer): String;
+function AtualizarAluno(): String;
 function ExcluirAluno(): String;
 function BuscarAlunos(): TDataSource; overload;
 function BuscarAlunos(Nome: String): TDataSource; overload;
@@ -144,7 +144,7 @@ begin
 
 end;
 
-function TAluno.AtualizarAluno(ID: Integer): String;
+function TAluno.AtualizarAluno(): String;
 var
   retorno: String;
 begin
@@ -174,8 +174,6 @@ begin
   except
 
     On Ex : EOCINativeException do
-
-      //retorno := IntToStr(Ex.Errors[0].ErrorCode);
 
       Case Ex.Errors[0].ErrorCode of
         20001 : retorno := '20001 - CÓDIGO ID INVÁLIDO!';
@@ -226,8 +224,6 @@ begin
     except
 
       On Ex : EOCINativeException do
-
-        //retorno := IntToStr(Ex.Errors[0].ErrorCode);
 
         Case Ex.Errors[0].ErrorCode of
           20001 : retorno := '20001 - CÓDIGO ID INVÁLIDO!';

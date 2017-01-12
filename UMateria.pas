@@ -43,7 +43,7 @@ Destructor Destroy; Override;
 procedure CarregarMateria(ID: Integer);
 
 function CadastrarMateria(): String;
-function AtualizarMateria(ID: Integer): String;
+function AtualizarMateria(): String;
 function ExcluirMateria(): String;
 function BuscarMaterias(): TDataSource; overload;
 function BuscarMaterias(Nome: String): TDataSource; overload;
@@ -107,8 +107,6 @@ begin
 
     On Ex : EOCINativeException do
 
-      //retorno := IntToStr(Ex.Errors[0].ErrorCode);
-
       Case Ex.Errors[0].ErrorCode of
         20001 : retorno := '20001 - NOME INVÁLIDO!';
         20002 : retorno := '20002 - DESCRIÇÃO INVÁLIDA!';
@@ -122,7 +120,7 @@ begin
 
 end;
 
-function TMateria.AtualizarMateria(ID: Integer): String;
+function TMateria.AtualizarMateria(): String;
 var
   retorno: String;
 begin
@@ -148,8 +146,6 @@ begin
   except
 
     On Ex : EOCINativeException do
-
-      //retorno := IntToStr(Ex.Errors[0].ErrorCode);
 
       Case Ex.Errors[0].ErrorCode of
         20001 : retorno := '20001 - CÓDIGO ID INVÁLIDO!';
@@ -191,8 +187,6 @@ begin
     except
 
       On Ex : EOCINativeException do
-
-        //retorno := IntToStr(Ex.Errors[0].ErrorCode);
 
         Case Ex.Errors[0].ErrorCode of
           20001 : retorno := '20001 - CÓDIGO ID INVÁLIDO!';

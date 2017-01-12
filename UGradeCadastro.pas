@@ -41,7 +41,7 @@ type
     { Private declarations }
     function CampoObrigatorioValido(): Boolean;
     procedure CadastrarGrade;
-    procedure AtualizarGrade(ID: Integer);
+    procedure AtualizarGrade;
   public
     { Public declarations }
     Acao: String;
@@ -77,7 +77,7 @@ begin
       end
     else
       begin
-        AtualizarGRade(ID);
+        AtualizarGRade();
         Close;
       end;
 
@@ -365,25 +365,31 @@ begin
 
 end;
 
-procedure TFrmGradeCadastro.AtualizarGrade(ID: Integer);
+procedure TFrmGradeCadastro.AtualizarGrade();
 var
   Grade: TGrade;
   Retorno: String;
+  CursoID, MateriaID, AlunoID: Integer;
 begin
+
+  CursoID := KeyValueCurso;
+  MateriaID := KeyValueMateria;
+  AlunoID := KeyValueAluno;
 
   try
 
-    Grade := TGrade.Create(ID);
+    Grade := TGrade.Create(ID, CursoID, MateriaID, AlunoID);
 
     with Grade do
     begin
       Nome := TxtNome.Text;
-      CursoID := DbcCurso.KeyValue;
-      MateriaID := DbcMateria.KeyValue;
-      AlunoID := DbcAluno.KeyValue;
     end;
 
-    Retorno := Grade.AtualizarGrade(ID);
+    CursoID := DbcCurso.KeyValue;
+    MateriaID := DbcMateria.KeyValue;
+    AlunoID := DbcAluno.KeyValue;
+
+    Retorno := Grade.AtualizarGrade(CursoID, MateriaID, AlunoID);
 
     if Retorno = '' then
       MessageBox(FrmGradeCadastro.Handle, 'Grade atualizada com sucesso!', 'Aviso', MB_OK or MB_ICONINFORMATION)

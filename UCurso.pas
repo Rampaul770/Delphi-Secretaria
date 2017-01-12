@@ -41,7 +41,7 @@ Destructor Destroy; Override;
 procedure CarregarCurso(ID: Integer);
 
 function CadastrarCurso(): String;
-function AtualizarCurso(ID: Integer): String;
+function AtualizarCurso(): String;
 function ExcluirCurso(): String;
 function BuscarCursos(): TDataSource; overload;
 function BuscarCursos(Nome: String): TDataSource; overload;
@@ -103,8 +103,6 @@ begin
 
     On Ex : EOCINativeException do
 
-      //retorno := IntToStr(Ex.Errors[0].ErrorCode);
-
       Case Ex.Errors[0].ErrorCode of
         20001 : retorno := '20001 - NOME INVÁLIDO!';
         20002 : retorno := '20002 - DESCRIÇÃO INVÁLIDA!';
@@ -117,7 +115,7 @@ begin
 
 end;
 
-function TCurso.AtualizarCurso(ID: Integer): String;
+function TCurso.AtualizarCurso(): String;
 var
   retorno: String;
 begin
@@ -142,8 +140,6 @@ begin
   except
 
     On Ex : EOCINativeException do
-
-      //retorno := IntToStr(Ex.Errors[0].ErrorCode);
 
       Case Ex.Errors[0].ErrorCode of
         20001 : retorno := '20001 - CÓDIGO ID INVÁLIDO!';
@@ -184,8 +180,6 @@ begin
     except
 
       On Ex : EOCINativeException do
-
-        //retorno := IntToStr(Ex.Errors[0].ErrorCode);
 
         Case Ex.Errors[0].ErrorCode of
           20001 : retorno := '20001 - CÓDIGO ID INVÁLIDO!';
